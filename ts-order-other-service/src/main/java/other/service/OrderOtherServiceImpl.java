@@ -13,6 +13,8 @@ public class OrderOtherServiceImpl implements OrderOtherService{
     @Autowired
     private OrderOtherRepository orderOtherRepository;
 
+
+
     @Override
     public LeftTicketInfo getSoldTickets(SeatRequest seatRequest, HttpHeaders headers){
         ArrayList<Order> list = orderOtherRepository.findByTravelDateAndTrainNumber(seatRequest.getTravelDate(),
