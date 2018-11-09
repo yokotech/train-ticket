@@ -17,25 +17,40 @@ public class initData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Account acc = new Account();
-        acc.setDocumentType(DocumentType.ID_CARD.getCode());
-        acc.setDocumentNum("DefaultDocumentNumber");
-        acc.setEmail("fdse_microservices@163.com");
-        acc.setPassword("DefaultPassword");
-        acc.setName("Default User");
-        acc.setGender(Gender.MALE.getCode());
-        acc.setId(UUID.fromString("4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f"));
-        ssoService.createAccount(acc);
 
-        acc = new Account();
-        acc.setDocumentType(DocumentType.ID_CARD.getCode());
-        acc.setDocumentNum("DefaultDocumentNumber");
-        acc.setEmail("root@163.com");
-        acc.setPassword("adminroot");
-        acc.setName("adminroot");
-        acc.setGender(Gender.MALE.getCode());
-        acc.setId(UUID.fromString("1d1a11c1-11cb-1cf1-b1bb-b11111d1da1f"));
-        ssoService.createAccount(acc);
+        if (ssoService.findAllAccount().getAccountArrayList().size() < 5000) {
+            Account acc = new Account();
+            acc.setDocumentType(DocumentType.ID_CARD.getCode());
+            acc.setDocumentNum("DefaultDocumentNumber");
+            acc.setEmail("fdse_microservices@163.com");
+            acc.setPassword("DefaultPassword");
+            acc.setName("Default User");
+            acc.setGender(Gender.MALE.getCode());
+            acc.setId(UUID.fromString("4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f"));
+            ssoService.createAccount(acc);
+
+            acc = new Account();
+            acc.setDocumentType(DocumentType.ID_CARD.getCode());
+            acc.setDocumentNum("DefaultDocumentNumber");
+            acc.setEmail("root@163.com");
+            acc.setPassword("adminroot");
+            acc.setName("adminroot");
+            acc.setGender(Gender.MALE.getCode());
+            acc.setId(UUID.fromString("1d1a11c1-11cb-1cf1-b1bb-b11111d1da1f"));
+            ssoService.createAccount(acc);
+
+            for (int i = 0; i <= 5000; i++) {
+                acc = new Account();
+                acc.setDocumentType(DocumentType.ID_CARD.getCode());
+                acc.setDocumentNum("DefaultDocumentNumber");
+                acc.setEmail(i + "@163.com");
+                acc.setPassword("123456");
+                acc.setName("Customer " + i);
+                acc.setGender(Gender.MALE.getCode());
+                acc.setId(UUID.randomUUID());
+                ssoService.createAccount(acc);
+            }
+        }
     }
 
 }
