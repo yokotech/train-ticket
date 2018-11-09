@@ -78,6 +78,51 @@ public class RoutePlanServiceImpl implements RoutePlanService{
     }
 
     @Override
+    public RoutePlanResults searchAllrouteResult(GetRoutePlanInfo info , HttpHeaders headers) {
+        QueryInfo queryInfo = new QueryInfo();
+        queryInfo.setStartingPlace(info.getFormStationName());
+        queryInfo.setEndPlace(info.getToStationName());
+        queryInfo.setDepartureTime(info.getTravelDate());
+
+        ArrayList<TripResponse> highSpeed = getTripFromHighSpeedTravelServive(queryInfo, headers);
+        ArrayList<TripResponse> normalTrain = getTripFromNormalTrainTravelService(queryInfo, headers);
+
+        ArrayList<TripResponse> finalResult = new ArrayList<>();
+
+        for(TripResponse tr : highSpeed){
+            finalResult.add(tr);
+        }
+        for(TripResponse tr : normalTrain){
+            finalResult.add(tr);
+        }
+
+        RoutePlanResults result = new RoutePlanResults();
+        result.setStatus(true);
+        result.setMessage("Success.");
+        ArrayList<RoutePlanResultUnit> units = new ArrayList<>();
+        for(int i = 0;i < finalResult.size();i++){
+            TripResponse tempResponse = finalResult.get(i);
+
+            RoutePlanResultUnit tempUnit = new RoutePlanResultUnit();
+            tempUnit.setTripId(tempResponse.getTripId().toString());
+            tempUnit.setTrainTypeId(tempResponse.getTrainTypeId());
+            tempUnit.setFromStationName(tempResponse.getStartingStation());
+            tempUnit.setToStationName(tempResponse.getTerminalStation());
+
+            tempUnit.setStopStations(getStationList(tempResponse.getTripId().toString(),headers));
+
+            tempUnit.setPriceForSecondClassSeat(tempResponse.getPriceForEconomyClass());
+            tempUnit.setPriceForFirstClassSeat(tempResponse.getPriceForConfortClass());
+            tempUnit.setStartingTime(tempResponse.getStartingTime());
+            tempUnit.setEndTime(tempResponse.getEndTime());
+            units.add(tempUnit);
+        }
+        result.setResults(units);
+
+        return result;
+    }
+
+    @Override
     public RoutePlanResults searchQuickestResult(GetRoutePlanInfo info,HttpHeaders headers) {
 
         //1.暴力取出travel-service和travel2-service的所有结果

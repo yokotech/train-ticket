@@ -26,6 +26,12 @@ public class TravelPlanController {
         return travelPlanService.getTransferSearch(info, headers);
     }
 
+    @RequestMapping(value = "/travelPlan/getAll", method = RequestMethod.POST)
+    public TravelAdvanceResult getTripTimeTable(@RequestBody QueryInfo queryInfo , @RequestHeader HttpHeaders headers) {
+        System.out.println("[Search All Routes]");
+        return travelPlanService.getAllRoutes(queryInfo, headers);
+    }
+
     @RequestMapping(value="/travelPlan/getCheapest", method= RequestMethod.POST)
     public TravelAdvanceResult getByCheapest(@RequestBody QueryInfo queryInfo,@RequestHeader HttpHeaders headers) {
         System.out.println("[Search Cheapest]");

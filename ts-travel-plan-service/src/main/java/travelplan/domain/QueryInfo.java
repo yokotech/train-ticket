@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class QueryInfo {
 
+    private String tripId;
+
     private String startingPlace;
 
     private String endPlace;
@@ -12,6 +14,14 @@ public class QueryInfo {
 
     public QueryInfo(){
         //Default Constructor
+    }
+
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
     }
 
     public String getStartingPlace() {

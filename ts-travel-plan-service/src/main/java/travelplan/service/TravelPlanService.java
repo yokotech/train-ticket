@@ -13,4 +13,5 @@ public interface TravelPlanService {
 
     TravelAdvanceResult getMinStation(QueryInfo info, HttpHeaders headers);
 
+    TravelAdvanceResult getAllRoutes(QueryInfo info, HttpHeaders headers);
 }

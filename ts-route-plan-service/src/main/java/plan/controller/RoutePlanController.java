@@ -21,6 +21,13 @@ public class RoutePlanController {
         return "Welcome to [ RoutePlan Service ] !";
     }
 
+    @RequestMapping(value = "/routePlan/allRoutes", method = RequestMethod.POST)
+    public RoutePlanResults getAllRoutes(@RequestBody GetRoutePlanInfo info, @RequestHeader HttpHeaders headers){
+        System.out.println("[Route Plan Service][Get All Routes] From:" + info.getFormStationName() +
+                " to:" + info.getToStationName() + " Num:" + info.getNum() + " Date:" + info.getTravelDate());
+        return routePlanService.searchAllrouteResult(info, headers);
+    }
+
     @RequestMapping(value = "/routePlan/cheapestRoute", method = RequestMethod.POST)
     public RoutePlanResults getCheapestRoutes(@RequestBody GetRoutePlanInfo info,@RequestHeader HttpHeaders headers){
         System.out.println("[Route Plan Service][Get Cheapest Routes] From:" + info.getFormStationName() +

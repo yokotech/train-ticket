@@ -12,4 +12,5 @@ public interface RoutePlanService {
 
     RoutePlanResults searchMinStopStations(GetRoutePlanInfo info,HttpHeaders headers);
 
+    RoutePlanResults searchAllrouteResult(GetRoutePlanInfo info,HttpHeaders headers);
 }

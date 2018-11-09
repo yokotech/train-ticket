@@ -163,13 +163,11 @@ public class OrderOtherController {
                 "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 HttpMethod.GET,
                 requestTokenResult,
-                VerifyResult.class);
+        VerifyResult.class);
         VerifyResult tokenResult = reTokenResult.getBody();
 //        VerifyResult tokenResult = restTemplate.getForObject(
 //                "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
 //                VerifyResult.class);
-
-
         return tokenResult;
     }
 }
