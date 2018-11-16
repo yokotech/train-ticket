@@ -17,6 +17,13 @@ public class GetAllFoodOfTripResult {
 
     }
 
+    public GetAllFoodOfTripResult(boolean status, String message, List<TrainFood> trainFoodList, Map<String, List<FoodStore>> foodStoreListMap) {
+        this.status = status;
+        this.message = message;
+        this.trainFoodList = trainFoodList;
+        this.foodStoreListMap = foodStoreListMap;
+    }
+
     public boolean isStatus() {
         return status;
     }

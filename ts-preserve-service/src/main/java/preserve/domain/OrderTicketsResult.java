@@ -12,6 +12,12 @@ public class OrderTicketsResult {
         //Default Constructor
     }
 
+    public OrderTicketsResult(boolean status, String message, Order order) {
+        this.status = status;
+        this.message = message;
+        this.order = order;
+    }
+
     public boolean isStatus() {
         return status;
     }

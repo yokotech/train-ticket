@@ -26,6 +26,7 @@ public class PaymentServiceImpl implements PaymentService{
 
     @Override
     public boolean pay(PaymentInfo info, HttpHeaders headers){
+
         if(paymentRepository.findByOrderId(info.getOrderId()) == null){
             Payment payment = new Payment();
             payment.setOrderId(info.getOrderId());
@@ -55,6 +56,9 @@ public class PaymentServiceImpl implements PaymentService{
     @Override
     public void initPayment(Payment payment, HttpHeaders headers){
         Payment paymentTemp = paymentRepository.findById(payment.getId());
+
+
+
         if(paymentTemp == null){
             paymentRepository.save(payment);
         }else{

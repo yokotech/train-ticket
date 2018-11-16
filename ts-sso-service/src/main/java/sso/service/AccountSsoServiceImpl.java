@@ -1,5 +1,7 @@
 package sso.service;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -75,6 +77,10 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             return lr;
         }
         Account result = accountRepository.findByEmail(li.getEmail());
+
+//        Cache<Object, Object> cache = CacheBuilder.newBuilder().build();
+//        cache.put("loginId", "result");
+
         if(result != null &&
                 result.getPassword() != null && li.getPassword() != null
                 && result.getPassword().equals(li.getPassword())){

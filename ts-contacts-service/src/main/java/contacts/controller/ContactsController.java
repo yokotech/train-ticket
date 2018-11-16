@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import contacts.service.ContactsService;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -21,6 +22,8 @@ public class ContactsController {
     @Autowired
     private RestTemplate restTemplate;
 
+    public static int requestContactsNumCache = 0;
+
     @RequestMapping(path = "/welcome", method = RequestMethod.GET)
     public String home() {
         return "Welcome to [ Contacts Service ] !";
@@ -29,7 +32,7 @@ public class ContactsController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/admincreate", method = RequestMethod.POST)
-    public AddContactsResult createNewContactsAdmin(@RequestBody Contacts aci, @RequestHeader HttpHeaders headers){
+    public AddContactsResult createNewContactsAdmin(@RequestBody Contacts aci, @RequestHeader HttpHeaders headers) {
         aci.setId(UUID.randomUUID());
         System.out.println("[ContactsService][Create Contacts In Admin]");
         aci = contactsService.createContacts(aci, headers);
@@ -42,58 +45,66 @@ public class ContactsController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/findAll", method = RequestMethod.GET)
-    public GetAllContactsResult getAllContacts(@RequestHeader HttpHeaders headers){
+    public GetAllContactsResult getAllContacts(@RequestHeader HttpHeaders headers) {
         System.out.println("[Contacts Service][Get All Contacts]");
         return contactsService.getAllContacts(headers);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/modifyContacts", method = RequestMethod.POST)
-    public ModifyContactsResult modifyContacts(@RequestBody ModifyContactsInfo info, @RequestHeader HttpHeaders headers){
+    public ModifyContactsResult modifyContacts(@RequestBody ModifyContactsInfo info, @RequestHeader HttpHeaders headers) {
         System.out.println("[Contacts Service][Modify Contacts] ContactsId:" + info.getContactsId());
         return contactsService.modify(info, headers);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/deleteContacts", method = RequestMethod.POST)
-    public DeleteContactsResult deleteContacts(@RequestBody DeleteContactsInfo info, @RequestHeader HttpHeaders headers){
-        return contactsService.delete(UUID.fromString(info.getContactsId()),headers);
+    public DeleteContactsResult deleteContacts(@RequestBody DeleteContactsInfo info, @RequestHeader HttpHeaders headers) {
+        return contactsService.delete(UUID.fromString(info.getContactsId()), headers);
     }
 
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/findContacts", method = RequestMethod.GET)
-    public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId,@CookieValue String loginToken, @RequestHeader HttpHeaders headers){
-        System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
-        VerifyResult tokenResult = verifySsoLogin(loginToken,headers);
-        if(tokenResult.isStatus() == true){
-            System.out.println("[ContactsService][VerifyLogin] Success");
-            return contactsService.findContactsByAccountId(UUID.fromString(loginId),headers);
-        }else {
-            System.out.println("[ContactsService][VerifyLogin] Fail");
-            return new ArrayList<Contacts>();
+    public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId, @CookieValue String loginToken, @RequestHeader HttpHeaders headers) {
+        requestContactsNumCache = requestContactsNumCache + 1;
+        ArrayList<Contacts> tempContactsList = null;
+
+        if(requestContactsNumCache <= 7 ) {
+            System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
+            VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+            if (tokenResult.isStatus() == true) {
+                System.out.println("[ContactsService][VerifyLogin] Success");
+                return contactsService.findContactsByAccountId(UUID.fromString(loginId), headers);
+            } else {
+                System.out.println("[ContactsService][VerifyLogin] Fail");
+                tempContactsList =  new ArrayList<Contacts>();
+            }
+        } else if(requestContactsNumCache > 7){
+            tempContactsList = new ArrayList<Contacts>();
         }
+        return tempContactsList;
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/getContactsById", method = RequestMethod.POST)
-    public GetContactsResult getContactsByContactsId(@RequestBody GetContactsInfo gci, @RequestHeader HttpHeaders headers){
-        VerifyResult tokenResult = verifySsoLogin(gci.getLoginToken(),headers);
+    public GetContactsResult getContactsByContactsId(@RequestBody GetContactsInfo gci, @RequestHeader HttpHeaders headers) {
+        VerifyResult tokenResult = verifySsoLogin(gci.getLoginToken(), headers);
         GetContactsResult gcr = new GetContactsResult();
-        if(tokenResult.isStatus() == true){
+        if (tokenResult.isStatus() == true) {
             System.out.println("[ContactsService][VerifyLogin] Success.");
             System.out.println("[ContactsService][Contacts Id Print] " + gci.getContactsId());
             Contacts contacts = contactsService.findContactsById(UUID.fromString(gci.getContactsId()), headers);
-            if(contacts == null){
+            if (contacts == null) {
                 gcr.setStatus(false);
                 gcr.setMessage("Contacts Not Exist.");
                 gcr.setContacts(null);
-            }else{
+            } else {
                 gcr.setStatus(true);
                 gcr.setMessage("Success.");
                 gcr.setContacts(contacts);
             }
-        }else{
+        } else {
             System.out.println("[ContactsService][VerifyLogin] Fail.");
             gcr.setStatus(false);
             gcr.setMessage("Not Login.");
@@ -107,12 +118,12 @@ public class ContactsController {
     public AddContactsResult createNewContacts(@RequestBody AddContactsInfo aci,
                                                @CookieValue String loginId,
                                                @CookieValue String loginToken,
-                                               @RequestHeader HttpHeaders headers){
-        VerifyResult tokenResult = verifySsoLogin(loginToken,headers);
-        if(tokenResult.isStatus() == true){
+                                               @RequestHeader HttpHeaders headers) {
+        VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+        if (tokenResult.isStatus() == true) {
             System.out.println("[ContactsService][VerifyLogin] Success");
-            return contactsService.create(aci,loginId,headers);
-        }else{
+            return contactsService.create(aci, loginId, headers);
+        } else {
             System.out.println("[ContactsService][VerifyLogin] Fail");
             AddContactsResult acr = new AddContactsResult();
             acr.setStatus(false);
@@ -155,11 +166,11 @@ public class ContactsController {
 //        }
 //    }
 
-    private VerifyResult verifySsoLogin(String loginToken, @RequestHeader HttpHeaders headers){
+    private VerifyResult verifySsoLogin(String loginToken, @RequestHeader HttpHeaders headers) {
         System.out.println("[Order Service][Verify Login] Verifying....");
 
-        HttpEntity requestTokenResult = new HttpEntity(null,headers);
-        ResponseEntity<VerifyResult> reTokenResult  = restTemplate.exchange(
+        HttpEntity requestTokenResult = new HttpEntity(null, headers);
+        ResponseEntity<VerifyResult> reTokenResult = restTemplate.exchange(
                 "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 HttpMethod.GET,
                 requestTokenResult,

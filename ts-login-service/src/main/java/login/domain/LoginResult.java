@@ -14,6 +14,13 @@ public class LoginResult {
         //Default Constructor
     }
 
+    public LoginResult(boolean status, String message, Account account, String token) {
+        this.status = status;
+        this.message = message;
+        this.account = account;
+        this.token = token;
+    }
+
     public boolean getStatus() {
         return status;
     }

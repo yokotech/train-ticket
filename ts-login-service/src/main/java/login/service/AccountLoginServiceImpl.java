@@ -60,6 +60,7 @@ public class AccountLoginServiceImpl implements AccountLoginService {
         LoginResult lr = re.getBody();
         //将cookie放到response中
         System.out.println("[Login Service] Status:" + lr.getStatus());
+
         if(lr.getStatus() == false){
             System.out.println("[Login Service] Status: false. Cookie wrong.");
         }else{

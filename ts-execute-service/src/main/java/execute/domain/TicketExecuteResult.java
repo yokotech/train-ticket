@@ -10,6 +10,11 @@ public class TicketExecuteResult {
         //Default contructor
     }
 
+    public TicketExecuteResult(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     public boolean isStatus() {
         return status;
     }

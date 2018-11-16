@@ -14,6 +14,8 @@ public class Travel2Controller {
     @Autowired
     private Travel2Service service;
 
+    public static int travel2QueryNumCache = 0;
+
     @RequestMapping(path = "/welcome", method = RequestMethod.GET)
     public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Travle2 Service ] !";
@@ -60,15 +62,23 @@ public class Travel2Controller {
     //返回Trip以及剩余票数
     @RequestMapping(value="/travel2/query", method= RequestMethod.POST)
     public ArrayList<TripResponse> query(@RequestBody QueryInfo info,@RequestHeader HttpHeaders headers){
-        if(info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
-                info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
-                info.getDepartureTime() == null){
-            System.out.println("[Travel Other Service][Travel Query] Fail.Something null.");
-            ArrayList<TripResponse> errorList = new ArrayList<>();
-            return errorList;
+        ArrayList<TripResponse> tempTripList= null;
+        System.out.println(String.format("The travel2QueryNumCache is %s", travel2QueryNumCache+""));
+        travel2QueryNumCache = travel2QueryNumCache +1;
+        if(travel2QueryNumCache <= 8) {
+            if (info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
+                    info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
+                    info.getDepartureTime() == null) {
+                System.out.println("[Travel Other Service][Travel Query] Fail.Something null.");
+                ArrayList<TripResponse> errorList = new ArrayList<>();
+                return errorList;
+            }
+            System.out.println("[Travel2 Service] Query TripResponse");
+            tempTripList= service.query(info,headers);
+        } else if(travel2QueryNumCache > 8){
+            tempTripList = new ArrayList<>();
         }
-        System.out.println("[Travel2 Service] Query TripResponse");
-        return service.query(info,headers);
+        return tempTripList;
     }
 
     @CrossOrigin(origins = "*")

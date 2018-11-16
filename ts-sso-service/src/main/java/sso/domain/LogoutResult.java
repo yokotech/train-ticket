@@ -10,6 +10,11 @@ public class LogoutResult {
         //Default Constructor
     }
 
+    public LogoutResult(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     public boolean isStatus() {
         return status;
     }

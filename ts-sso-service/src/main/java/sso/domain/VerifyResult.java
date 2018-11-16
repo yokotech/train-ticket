@@ -10,6 +10,11 @@ public class VerifyResult {
         //Default Constructor
     }
 
+    public VerifyResult(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     public boolean isStatus() {
         return status;
     }

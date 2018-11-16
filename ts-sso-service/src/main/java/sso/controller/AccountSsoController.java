@@ -1,5 +1,7 @@
 package sso.controller;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,10 @@ public class AccountSsoController {
 
     @Autowired
     private AccountSsoService ssoService;
+
+
+    Cache<Object, Object> accountLoginLogOutCache = CacheBuilder.newBuilder().build();
+
 
 
     @RequestMapping(path = "/welcome", method = RequestMethod.GET)
@@ -81,6 +87,9 @@ public class AccountSsoController {
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public LogoutResult logoutDeleteToken(@RequestBody LogoutInfo li, @RequestHeader HttpHeaders headers){
         System.out.println("[SSO Service][Logout Delete Token] ID:" + li.getId() + "Token:" + li.getToken());
+        if(!li.getToken().equals(accountLoginLogOutCache.getIfPresent("loginToken"))){
+            return  new LogoutResult(false,"Not Login");
+        }
         return ssoService.logoutDeleteToken(li,headers);
     }
 
@@ -92,10 +101,14 @@ public class AccountSsoController {
 
     @RequestMapping(path = "/verifyLoginToken/{token}", method = RequestMethod.GET)
     public VerifyResult verifyLoginToken(@PathVariable String token, @RequestHeader HttpHeaders headers){
+        if(token.equals(accountLoginLogOutCache.getIfPresent("loginToken") == null)){
+            return  new VerifyResult(false,"Verify Fail.");
+        }
         return ssoService.verifyLoginToken(token,headers);
     }
 
     public PutLoginResult loginPutToken(String loginId){
+        accountLoginLogOutCache.put("loginToken", loginId);
         return ssoService.loginPutToken(loginId);
     }
 
