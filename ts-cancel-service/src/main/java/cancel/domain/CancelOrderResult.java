@@ -10,6 +10,11 @@ public class CancelOrderResult {
         //Default Constructor
     }
 
+    public CancelOrderResult(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
     public boolean isStatus() {
         return status;
     }

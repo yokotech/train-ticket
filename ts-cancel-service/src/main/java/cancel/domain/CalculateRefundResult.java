@@ -12,6 +12,12 @@ public class CalculateRefundResult {
         //Default Constructor
     }
 
+    public CalculateRefundResult(boolean status, String message, String refund) {
+        this.status = status;
+        this.message = message;
+        this.refund = refund;
+    }
+
     public boolean isStatus() {
         return status;
     }
