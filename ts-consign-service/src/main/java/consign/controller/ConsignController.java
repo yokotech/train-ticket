@@ -16,29 +16,34 @@ public class ConsignController {
     @Autowired
     ConsignService service;
 
+    public static int insertConsignCache = 0;
+
     @RequestMapping(path = "/welcome", method = RequestMethod.GET)
-    public String home(@RequestHeader HttpHeaders headers){
+    public String home(@RequestHeader HttpHeaders headers) {
         return "Welcome to [ Consign Service ] !";
     }
 
-    @RequestMapping(value = "/consign/insertConsign", method= RequestMethod.POST)
-    public InsertConsignRecordResult insertConsign(@RequestBody ConsignRequest request, @RequestHeader HttpHeaders headers){
-        return service.insertConsignRecord(request, headers);
+    @RequestMapping(value = "/consign/insertConsign", method = RequestMethod.POST)
+    public InsertConsignRecordResult insertConsign(@RequestBody ConsignRequest request, @RequestHeader HttpHeaders headers) {
+        insertConsignCache = insertConsignCache + 1;
+        InsertConsignRecordResult icr = service.insertConsignRecord(request, headers);
+        icr.setMessage(icr.getMessage()+"__"+insertConsignCache);
+        return icr;
     }
 
-    @RequestMapping(value = "/consign/updateConsign", method= RequestMethod.POST)
-    public boolean updateConsign(@RequestBody ConsignRequest request, @RequestHeader HttpHeaders headers){
+    @RequestMapping(value = "/consign/updateConsign", method = RequestMethod.POST)
+    public boolean updateConsign(@RequestBody ConsignRequest request, @RequestHeader HttpHeaders headers) {
         return service.updateConsignRecord(request, headers);
     }
 
-    @RequestMapping(value = "/consign/findByAccountId/{id}", method= RequestMethod.GET)
-    public List<ConsignRecord> findByAccountId(@PathVariable String id, @RequestHeader HttpHeaders headers){
+    @RequestMapping(value = "/consign/findByAccountId/{id}", method = RequestMethod.GET)
+    public List<ConsignRecord> findByAccountId(@PathVariable String id, @RequestHeader HttpHeaders headers) {
         UUID newid = UUID.fromString(id);
         return service.queryByAccountId(newid, headers);
     }
 
-    @RequestMapping(value = "/consign/findByConsignee", method= RequestMethod.POST)
-    public List<ConsignRecord> findByConsignee(@RequestParam(value = "consignee", required = true) String consignee, @RequestHeader HttpHeaders headers){
+    @RequestMapping(value = "/consign/findByConsignee", method = RequestMethod.POST)
+    public List<ConsignRecord> findByConsignee(@RequestParam(value = "consignee", required = true) String consignee, @RequestHeader HttpHeaders headers) {
         return service.queryByConsignee(consignee, headers);
     }
 }
