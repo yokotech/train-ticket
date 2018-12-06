@@ -28,11 +28,9 @@ public class ExecuteControlller {
         System.out.println("[Execute Service][Execute] Id:" + info.getOrderId());
         executeNumCache = executeNumCache + 1;
         TicketExecuteResult ticketExecuteResult = null;
-        if (executeNumCache <= 2) {
-            ticketExecuteResult = executeService.ticketExecute(info, headers);
-        } else if (executeNumCache > 2) {
-            ticketExecuteResult = new TicketExecuteResult(false, "execute too many times");
-        }
+        System.out.println("executeNumCache  " +executeNumCache);
+        ticketExecuteResult = executeService.ticketExecute(info, headers);
+        ticketExecuteResult.setMessage(ticketExecuteResult.getMessage()+"__"+executeNumCache);
         return ticketExecuteResult;
     }
 
@@ -42,11 +40,10 @@ public class ExecuteControlller {
         System.out.println("[Execute Service][Collect] Id:" + info.getOrderId());
         collectNumCache = collectNumCache + 1;
         TicketExecuteResult ticketExecuteResult = null;
-        if (collectNumCache <= 3) {
-            ticketExecuteResult = executeService.ticketCollect(info, headers);
-        } else if (collectNumCache > 3) {
-            ticketExecuteResult = new TicketExecuteResult(false, "collected too many yimes");
-        }
+        System.out.println("collectNumCache  " +collectNumCache);
+        ticketExecuteResult = executeService.ticketCollect(info, headers);
+
+        ticketExecuteResult.setMessage(ticketExecuteResult.getMessage()+"__"+collectNumCache);
         return ticketExecuteResult;
     }
 }

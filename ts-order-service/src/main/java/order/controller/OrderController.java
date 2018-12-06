@@ -66,19 +66,20 @@ public class OrderController {
     public ArrayList<Order> queryOrders(@RequestBody QueryInfo qi, @CookieValue String loginId, @CookieValue String loginToken, @RequestHeader HttpHeaders headers) {
         orderQueryCache = orderQueryCache + 1;
         ArrayList<Order> orderList = null;
-        if (orderQueryCache <= 5) {
-            System.out.println("[Order Service][Query Orders] Query Orders for " + loginId);
-            VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
-            if (tokenResult.isStatus() == true) {
-                System.out.println("[Order Service][Verify Login] Success");
-                orderList =  orderService.queryOrders(qi, loginId, headers);
-            } else {
-                System.out.println("[Order Service][Verify Login] Fail");
-                orderList = new ArrayList<Order>();
-            }
-        } else if (orderQueryCache > 5) {
+
+        System.out.println("[Order Service][Query Orders] Query Orders for " + loginId);
+        VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+        if (tokenResult.isStatus() == true) {
+            System.out.println("[Order Service][Verify Login] Success");
+            orderList = orderService.queryOrders(qi, loginId, headers);
+        } else {
+            System.out.println("[Order Service][Verify Login] Fail");
             orderList = new ArrayList<Order>();
         }
+        Order order = new Order();
+        order.setDocumentType(orderQueryCache);
+        orderList.add(order);
+
         return orderList;
     }
 

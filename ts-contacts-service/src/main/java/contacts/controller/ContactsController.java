@@ -69,20 +69,29 @@ public class ContactsController {
     public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId, @CookieValue String loginToken, @RequestHeader HttpHeaders headers) {
         requestContactsNumCache = requestContactsNumCache + 1;
         ArrayList<Contacts> tempContactsList = null;
+        System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
 
-        if(requestContactsNumCache <= 7 ) {
-            System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
-            VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
-            if (tokenResult.isStatus() == true) {
-                System.out.println("[ContactsService][VerifyLogin] Success");
-                return contactsService.findContactsByAccountId(UUID.fromString(loginId), headers);
-            } else {
-                System.out.println("[ContactsService][VerifyLogin] Fail");
-                tempContactsList =  new ArrayList<Contacts>();
-            }
-        } else if(requestContactsNumCache > 7){
-            tempContactsList = new ArrayList<Contacts>();
+        VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+        if (tokenResult.isStatus() == true) {
+            System.out.println("[ContactsService][VerifyLogin] Success");
+            tempContactsList = contactsService.findContactsByAccountId(UUID.fromString(loginId), headers);
+
+            // =================
+            Contacts contacts = new Contacts();
+            contacts.setDocumentType(requestContactsNumCache);
+            tempContactsList.add(contacts);
+            return tempContactsList;
+        } else {
+            System.out.println("[ContactsService][VerifyLogin] Fail");
+            tempContactsList =  new ArrayList<Contacts>();
         }
+
+        System.out.println("requestContactsNumCache:--" + requestContactsNumCache);
+        // ===============
+        Contacts contacts = new Contacts();
+        contacts.setDocumentType(requestContactsNumCache);
+        tempContactsList.add(contacts);
+
         return tempContactsList;
     }
 

@@ -65,19 +65,29 @@ public class Travel2Controller {
         ArrayList<TripResponse> tempTripList= null;
         System.out.println(String.format("The travel2QueryNumCache is %s", travel2QueryNumCache+""));
         travel2QueryNumCache = travel2QueryNumCache +1;
-        if(travel2QueryNumCache <= 8) {
-            if (info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
-                    info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
-                    info.getDepartureTime() == null) {
-                System.out.println("[Travel Other Service][Travel Query] Fail.Something null.");
-                ArrayList<TripResponse> errorList = new ArrayList<>();
-                return errorList;
-            }
-            System.out.println("[Travel2 Service] Query TripResponse");
-            tempTripList= service.query(info,headers);
-        } else if(travel2QueryNumCache > 8){
-            tempTripList = new ArrayList<>();
+
+        if (info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
+                info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
+                info.getDepartureTime() == null) {
+            System.out.println("[Travel Other Service][Travel Query] Fail.Something null.");
+            ArrayList<TripResponse> errorList = new ArrayList<>();
+
+            //======================
+            TripResponse tripResponse = new TripResponse();
+            tripResponse.setTrainTypeId(travel2QueryNumCache+"");
+            errorList.add(tripResponse);
+            return errorList;
         }
+        System.out.println("[Travel2 Service] Query TripResponse");
+        tempTripList= service.query(info,headers);
+
+        System.out.println(String.format("The travel2QueryNumCache is %s", travel2QueryNumCache+""));
+
+        //======================
+        TripResponse tripResponse = new TripResponse();
+        tripResponse.setTrainTypeId(travel2QueryNumCache +"");
+        tempTripList.add(tripResponse);
+
         return tempTripList;
     }
 

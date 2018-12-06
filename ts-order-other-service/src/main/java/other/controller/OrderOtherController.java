@@ -67,18 +67,20 @@ public class OrderOtherController {
         System.out.println("[Order Other Service][Query Orders] Query Orders for " + loginId);
         orderOtherQueryCache = orderOtherQueryCache + 1;
         ArrayList<Order> orderList = null;
-        if (orderOtherQueryCache <= 5) {
-            VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
-            if (tokenResult.isStatus() == true) {
-                System.out.println("[Order Other Service][Verify Login] Success");
-                orderList = orderService.queryOrders(qi, loginId, headers);
-            } else {
-                System.out.println("[Order Other Service][Verify Login] Fail");
-                orderList = new ArrayList<Order>();
-            }
-        }else if(orderOtherQueryCache > 5){
+
+        VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+        if (tokenResult.isStatus() == true) {
+            System.out.println("[Order Other Service][Verify Login] Success");
+            orderList = orderService.queryOrders(qi, loginId, headers);
+        } else {
+            System.out.println("[Order Other Service][Verify Login] Fail");
             orderList = new ArrayList<Order>();
         }
+
+        Order order = new Order();
+        order.setDocumentType(orderOtherQueryCache);
+        orderList.add(order);
+
         return orderList;
     }
 

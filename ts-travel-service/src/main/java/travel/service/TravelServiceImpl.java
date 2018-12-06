@@ -191,6 +191,7 @@ public class TravelServiceImpl implements TravelService{
             gtdr.setTrip(null);
         }else{
 
+
             String startingPlaceName = gtdi.getFrom();
             String endPlaceName = gtdi.getTo();
             String startingPlaceId = queryForStationId(startingPlaceName,headers);

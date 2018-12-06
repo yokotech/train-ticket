@@ -25,13 +25,12 @@ public class PreserveController {
                                        @CookieValue String loginToken, @RequestHeader HttpHeaders headers) {
         OrderTicketsResult orderTicketsResult = null;
         preserveCache = preserveCache + 1;
-        if (preserveCache <= 5) {
-            System.out.println("[Preserve Service][Preserve] Account " + loginId + " order from " +
-                    oti.getFrom() + " -----> " + oti.getTo() + " at " + oti.getDate());
-            orderTicketsResult = preserveService.preserve(oti, loginId, loginToken, headers);
-        } else if (preserveCache > 5) {
-            orderTicketsResult = new OrderTicketsResult(false, "preserve too many times", null);
-        }
+        System.out.println("[Preserve Service][Preserve] Account " + loginId + " order from " +
+                oti.getFrom() + " -----> " + oti.getTo() + " at " + oti.getDate());
+        orderTicketsResult = preserveService.preserve(oti, loginId, loginToken, headers);
+        System.out.println(preserveCache + "--preserveCache");
+
+        orderTicketsResult.setMessage(orderTicketsResult.getMessage()+"__"+preserveCache);
         return orderTicketsResult;
     }
 }

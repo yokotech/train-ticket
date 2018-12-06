@@ -39,11 +39,8 @@ public class CancelController {
         cancelCalculateCache = cancelCalculateCache + 1;
         CalculateRefundResult calculateRefundResult = null;
 
-        if (cancelCalculateCache <= 4) {
-            calculateRefundResult = cancelService.calculateRefund(info, headers);
-        } else if (cancelCalculateCache > 4) {
-            calculateRefundResult = new CalculateRefundResult(false, "cancel calculate refound more than 4 times", null);
-        }
+        calculateRefundResult = cancelService.calculateRefund(info, headers);
+        calculateRefundResult.setMessage(calculateRefundResult.getMessage() + "__" + cancelCalculateCache);
         return calculateRefundResult;
     }
 
@@ -53,38 +50,35 @@ public class CancelController {
         System.out.println("[Cancel Order Service][Cancel Ticket] info:" + info.getOrderId());
         cancelOrderCache = cancelOrderCache + 1;
         CancelOrderResult cancelOrderResult = null;
-        if (cancelOrderCache <= 3) {
-            if (loginToken == null) {
-                loginToken = "admin";
-            }
-            System.out.println("[Cancel Order Service][Cancel Order] order ID:" + info.getOrderId() + "  loginToken:" + loginToken);
-            if (loginToken == null) {
-                System.out.println("[Cancel Order Service][Cancel Order] Not receive any login token");
-                CancelOrderResult result = new CancelOrderResult();
-                result.setStatus(false);
-                result.setMessage("No Login Token");
-                cancelOrderResult = result;
-            }
-            VerifyResult verifyResult = verifySsoLogin(loginToken, headers);
-            if (verifyResult.isStatus() == false) {
-                System.out.println("[Cancel Order Service][Cancel Order] Do not login.");
-                CancelOrderResult result = new CancelOrderResult();
-                result.setStatus(false);
-                result.setMessage("Not Login");
-                cancelOrderResult = result;
-            } else {
-                System.out.println("[Cancel Order Service][Cancel Ticket] Verify Success");
-                try {
-                    cancelOrderResult = cancelService.cancelOrder(info, loginToken, loginId, headers);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return null;
-                }
 
-            }
-        } else if (cancelOrderCache > 3) {
-            cancelOrderResult = new CancelOrderResult(false,"cancel order more than three times ");
+        if (loginToken == null) {
+            loginToken = "admin";
         }
+        System.out.println("[Cancel Order Service][Cancel Order] order ID:" + info.getOrderId() + "  loginToken:" + loginToken);
+        if (loginToken == null) {
+            System.out.println("[Cancel Order Service][Cancel Order] Not receive any login token");
+            CancelOrderResult result = new CancelOrderResult();
+            result.setStatus(false);
+            result.setMessage("No Login Token");
+            cancelOrderResult = result;
+        }
+        VerifyResult verifyResult = verifySsoLogin(loginToken, headers);
+        if (verifyResult.isStatus() == false) {
+            System.out.println("[Cancel Order Service][Cancel Order] Do not login.");
+            CancelOrderResult result = new CancelOrderResult();
+            result.setStatus(false);
+            result.setMessage("Not Login");
+            cancelOrderResult = result;
+        } else {
+            System.out.println("[Cancel Order Service][Cancel Ticket] Verify Success");
+            try {
+                cancelOrderResult = cancelService.cancelOrder(info, loginToken, loginId, headers);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        cancelOrderResult.setMessage(cancelOrderResult.getMessage()+"__"+cancelOrderCache);
         return cancelOrderResult;
     }
 
@@ -101,8 +95,6 @@ public class CancelController {
 //        VerifyResult tokenResult = restTemplate.getForObject(
 //                "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
 //                VerifyResult.class);
-
-
         return tokenResult;
     }
 

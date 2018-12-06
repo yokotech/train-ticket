@@ -26,13 +26,11 @@ public class InsidePaymentController {
     public boolean pay(@RequestBody PaymentInfo info, HttpServletRequest request, @RequestHeader HttpHeaders headers) {
         insidePaymentCache = insidePaymentCache + 1;
         boolean payResult = false;
-        if (insidePaymentCache <= 4) {
-            System.out.println("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
-            payResult = service.pay(info, request, headers);
-        } else if (insidePaymentCache > 4) {
-            payResult = false;
-        }
-        return service.pay(info, request, headers);
+
+        System.out.println("insidePaymentCache " + insidePaymentCache);
+        System.out.println("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
+        payResult = service.pay(info, request, headers);
+        return payResult;
     }
 
     @RequestMapping(value = "/inside_payment/createAccount", method = RequestMethod.POST)

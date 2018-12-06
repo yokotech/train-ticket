@@ -29,12 +29,10 @@ public class FoodController {
     public GetAllFoodOfTripResult getFood(@RequestBody GetAllFoodOfTripInfo gati, @RequestHeader HttpHeaders headers) {
         getFoodTimeCache = getFoodTimeCache + 1;
         GetAllFoodOfTripResult getAllFoodOfTripResult = null;
-        if(getFoodTimeCache <= 6) {
-            System.out.println("[Food Service]Get the Get Food Request!");
-            getAllFoodOfTripResult = foodService.getAllFood(gati.getDate(), gati.getStartStation(), gati.getEndStation(), gati.getTripId(), headers);
-        } else if(getFoodTimeCache > 6) {
-            getAllFoodOfTripResult = new GetAllFoodOfTripResult(false, "request more than six times", null, null);
-        }
+
+        System.out.println("[Food Service]Get the Get Food Request!");
+        getAllFoodOfTripResult = foodService.getAllFood(gati.getDate(), gati.getStartStation(), gati.getEndStation(), gati.getTripId(), headers);
+        getAllFoodOfTripResult.setMessage(getAllFoodOfTripResult.getMessage()+"__"+ getFoodTimeCache);
         return getAllFoodOfTripResult;
     }
 

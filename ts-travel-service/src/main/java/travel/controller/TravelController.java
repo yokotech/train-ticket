@@ -70,19 +70,27 @@ public class TravelController {
         ArrayList<TripResponse> tempTripList= null;
         System.out.println(String.format("The travelQueryNumCache is %s", travelQueryNumCache+""));
         travelQueryNumCache = travelQueryNumCache + 1;
-        if (travelQueryNumCache <= 8) {
-            if (info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
-                    info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
-                    info.getDepartureTime() == null) {
-                System.out.println("[Travel Service][Travel Query] Fail.Something null.");
-                ArrayList<TripResponse> errorList = new ArrayList<>();
-                return errorList;
-            }
-            System.out.println("[Travel Service] Query TripResponse");
-            tempTripList = travelService.query(info, headers);
-        } else if(travelQueryNumCache > 8) {
-            tempTripList = new ArrayList<>();
+
+        if (info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
+                info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
+                info.getDepartureTime() == null) {
+            System.out.println("[Travel Service][Travel Query] Fail.Something null.");
+            ArrayList<TripResponse> errorList = new ArrayList<>();
+
+            // ============================
+            TripResponse tripResponse = new TripResponse();
+            tripResponse.setTrainTypeId(travelQueryNumCache+"");
+            errorList.add(tripResponse);
+
+            return errorList;
         }
+        System.out.println("[Travel Service] Query TripResponse");
+        tempTripList = travelService.query(info, headers);
+        // ============================
+        TripResponse tripResponse = new TripResponse();
+        tripResponse.setTrainTypeId(travelQueryNumCache+"");
+        tempTripList.add(tripResponse);
+
         return tempTripList;
     }
 
