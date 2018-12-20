@@ -64,9 +64,9 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
             System.out.println("[Preserve Other Service] [Step 3] TripId:" + oti.getTripId());
             GetTripAllDetailResult gtdr = getTripAllDetailInformation(gtdi, httpHeaders);
             if(gtdr.isStatus() == false){
-                System.out.println("[Preserve Other Service][Search For Trip Detail Information] " + gcr.getMessage());
+                System.out.println("[Preserve Other Service][Search For Trip Detail Information] " + gtdr.getMessage());
                 otr.setStatus(false);
-                otr.setMessage(gcr.getMessage());
+                otr.setMessage(gtdr.getMessage());
                 otr.setOrder(null);
                 return otr;
             }else{
