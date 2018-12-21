@@ -85,8 +85,28 @@ public class OrderOtherController {
     }
 
     @CrossOrigin(origins = "*")
+<<<<<<< HEAD
     @RequestMapping(path = "/orderOther/calculate", method = RequestMethod.POST)
     public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti, @RequestHeader HttpHeaders headers) {
+=======
+    @RequestMapping(path = "/orderOther/queryForRefresh", method = RequestMethod.POST)
+    public ArrayList<Order> queryOrdersForRefresh(@RequestBody QueryInfo qi,@CookieValue String loginId,@CookieValue String loginToken, @RequestHeader HttpHeaders headers){
+        System.out.println("[Order Other Service][Query Orders] Query Orders for " + loginId);
+        VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+        if(tokenResult.isStatus() == true){
+            System.out.println("[Order Other Service][Verify Login] Success");
+            return orderService.queryOrdersForRefresh(qi,loginId, headers);
+        }else{
+            System.out.println("[Order Other Service][Verify Login] Fail");
+            return new ArrayList<Order>();
+        }
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path="/orderOther/calculate", method = RequestMethod.POST)
+    public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti, @RequestHeader HttpHeaders headers){
+>>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
         System.out.println("[Order Other Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
                 + csti.getTrainNumber());
         return orderService.queryAlreadySoldOrders(csti, headers);
@@ -167,21 +187,27 @@ public class OrderOtherController {
         return orderService.getAllOrders(headers);
     }
 
+<<<<<<< HEAD
     private VerifyResult verifySsoLogin(String loginToken, @RequestHeader HttpHeaders headers) {
         System.out.println("[Order Service][Verify Login] Verifying....");
 
         HttpEntity requestTokenResult = new HttpEntity(null, headers);
         ResponseEntity<VerifyResult> reTokenResult = restTemplate.exchange(
+=======
+    private VerifyResult verifySsoLogin(String loginToken, @RequestHeader HttpHeaders headers){
+        System.out.println("[Order Other Service][Verify Login] Verifying....");
+        System.out.println("=======Token: " + loginToken + "=======");
+        HttpEntity requestTokenResult = new HttpEntity(headers);
+        ResponseEntity<VerifyResult> reTokenResult  = restTemplate.exchange(
+>>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
                 "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 HttpMethod.GET,
                 requestTokenResult,
                 VerifyResult.class);
-        VerifyResult tokenResult = reTokenResult.getBody();
-//        VerifyResult tokenResult = restTemplate.getForObject(
+        //        VerifyResult tokenResult = restTemplate.getForObject(
 //                "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
 //                VerifyResult.class);
 
-
-        return tokenResult;
+        return reTokenResult.getBody();
     }
 }

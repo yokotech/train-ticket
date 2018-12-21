@@ -9,12 +9,15 @@ spring:
       database: ts
       port: 27017
 
+<<<<<<< HEAD
 #  zipkin:
 #    baseUrl: http://zipkin:9411/
   sleuth:
     sampler:
       percentage: 1.0
 
+=======
+>>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
 # HTTP Server
 server:
   port: 11188  # HTTP (Tomcat) port

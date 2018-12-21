@@ -84,8 +84,27 @@ public class OrderController {
     }
 
     @CrossOrigin(origins = "*")
+<<<<<<< HEAD
     @RequestMapping(path = "/order/calculate", method = RequestMethod.POST)
     public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti, @RequestHeader HttpHeaders headers) {
+=======
+    @RequestMapping(path = "/order/queryForRefresh", method = RequestMethod.POST)
+    public ArrayList<Order> queryOrdersForRefresh(@RequestBody QueryInfo qi,@CookieValue String loginId,@CookieValue String loginToken, @RequestHeader HttpHeaders headers){
+        System.out.println("[Order Service][Query Orders] Query Orders for " + loginId);
+        VerifyResult tokenResult = verifySsoLogin(loginToken, headers);
+        if(tokenResult.isStatus() == true){
+            System.out.println("[Order Service][Verify Login] Success");
+            return orderService.queryOrdersForRefresh(qi,loginId,headers);
+        }else{
+            System.out.println("[Order Service][Verify Login] Fail");
+            return new ArrayList<>();
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path="/order/calculate", method = RequestMethod.POST)
+    public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti, @RequestHeader HttpHeaders headers){
+>>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
         System.out.println("[Order Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
                 + csti.getTrainNumber());
         return orderService.queryAlreadySoldOrders(csti, headers);

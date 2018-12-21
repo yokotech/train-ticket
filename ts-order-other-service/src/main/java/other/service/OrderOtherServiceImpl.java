@@ -1,6 +1,10 @@
 package other.service;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 import other.domain.*;
 import other.repository.OrderOtherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,12 @@ public class OrderOtherServiceImpl implements OrderOtherService{
     @Autowired
     private OrderOtherRepository orderOtherRepository;
 
+<<<<<<< HEAD
 
+=======
+    @Autowired
+    private RestTemplate restTemplate;
+>>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
 
     @Override
     public LeftTicketInfo getSoldTickets(SeatRequest seatRequest, HttpHeaders headers){
@@ -161,6 +170,34 @@ public class OrderOtherServiceImpl implements OrderOtherService{
             System.out.println("[Order Other Service][Query Order] Get order num:" + list.size());
             return list;
         }
+    }
+
+    @Override
+    public ArrayList<Order> queryOrdersForRefresh(QueryInfo qi,String accountId, HttpHeaders headers){
+        ArrayList<Order> orders = queryOrders(qi, accountId, headers);
+        ArrayList<String> stationIds = new ArrayList<>();
+        for(Order order : orders){
+            stationIds.add(order.getFrom());
+            stationIds.add(order.getTo());
+        }
+        ArrayList<String> names = queryForStationId(stationIds, headers);
+        for(int i = 0; i < orders.size();i++){
+            orders.get(i).setFrom(names.get(i * 2));
+            orders.get(i).setTo(names.get(i * 2 + 1));
+        }
+        return orders;
+    }
+
+    public ArrayList<String> queryForStationId(ArrayList<String> ids, HttpHeaders headers){
+        QueryByIdBatch batch = new QueryByIdBatch(ids);
+        HttpEntity requestEntity = new HttpEntity(batch, headers);
+        ResponseEntity<QueryByIdBatchResult> re = restTemplate.exchange(
+                "http://ts-station-service:12345/station/queryByIdBatch",
+                HttpMethod.POST,
+                requestEntity,
+                QueryByIdBatchResult.class);
+        QueryByIdBatchResult names = re.getBody();
+        return names.getStationNameList();
     }
 
     @Override

@@ -99,6 +99,7 @@ public class AccountSsoController {
         return ssoService.getAccountById(info,headers);
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(path = "/verifyLoginToken/{token}", method = RequestMethod.GET)
     public VerifyResult verifyLoginToken(@PathVariable String token, @RequestHeader HttpHeaders headers){
         if(token.equals(accountLoginLogOutCache.getIfPresent("loginToken") == null)){

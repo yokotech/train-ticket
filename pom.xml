@@ -88,6 +88,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+<<<<<<< HEAD
 		<!--<dependency>-->
 			<!--<groupId>org.springframework.cloud</groupId>-->
 			<!--<artifactId>spring-cloud-sleuth-core</artifactId>-->
@@ -102,6 +103,8 @@
 		<!--</dependency>-->
 
 
+=======
+>>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-integration</artifactId>
