@@ -1,7 +1,5 @@
 package contacts.service;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import contacts.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -187,13 +187,12 @@ public class OrderOtherController {
         return orderService.getAllOrders(headers);
     }
 
-<<<<<<< HEAD
+
     private VerifyResult verifySsoLogin(String loginToken, @RequestHeader HttpHeaders headers) {
         System.out.println("[Order Service][Verify Login] Verifying....");
 
         HttpEntity requestTokenResult = new HttpEntity(null, headers);
         ResponseEntity<VerifyResult> reTokenResult = restTemplate.exchange(
-=======
     private VerifyResult verifySsoLogin(String loginToken, @RequestHeader HttpHeaders headers){
         System.out.println("[Order Other Service][Verify Login] Verifying....");
         System.out.println("=======Token: " + loginToken + "=======");
