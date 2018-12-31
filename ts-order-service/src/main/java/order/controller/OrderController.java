@@ -22,6 +22,7 @@ public class OrderController {
     private RestTemplate restTemplate;
 
     private static int orderQueryCache = 0;
+    private static int getOrderByIdCache = 0;
 
     @RequestMapping(path = "/welcome", method = RequestMethod.GET)
     public String home() {
@@ -83,11 +84,7 @@ public class OrderController {
         return orderList;
     }
 
-    @CrossOrigin(origins = "*")
-<<<<<<< HEAD
-    @RequestMapping(path = "/order/calculate", method = RequestMethod.POST)
-    public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti, @RequestHeader HttpHeaders headers) {
-=======
+
     @RequestMapping(path = "/order/queryForRefresh", method = RequestMethod.POST)
     public ArrayList<Order> queryOrdersForRefresh(@RequestBody QueryInfo qi,@CookieValue String loginId,@CookieValue String loginToken, @RequestHeader HttpHeaders headers){
         System.out.println("[Order Service][Query Orders] Query Orders for " + loginId);
@@ -104,7 +101,7 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/calculate", method = RequestMethod.POST)
     public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti, @RequestHeader HttpHeaders headers){
->>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
+
         System.out.println("[Order Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
                 + csti.getTrainNumber());
         return orderService.queryAlreadySoldOrders(csti, headers);
@@ -128,7 +125,10 @@ public class OrderController {
     @RequestMapping(path = "/order/getById", method = RequestMethod.POST)
     public GetOrderResult getOrderById(@RequestBody GetOrderByIdInfo info, @RequestHeader HttpHeaders headers) {
         System.out.println("[Order Service][Get Order By Id] Order Id:" + info.getOrderId());
-        return orderService.getOrderById(info, headers);
+        getOrderByIdCache = getOrderByIdCache + 1;
+        GetOrderResult getOrderResult = orderService.getOrderById(info, headers);
+        getOrderResult.setMessage(getOrderResult.getMessage() +"__" + getOrderByIdCache);
+        return getOrderResult;
     }
 
     @CrossOrigin(origins = "*")
