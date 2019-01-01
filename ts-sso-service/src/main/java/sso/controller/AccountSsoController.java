@@ -15,7 +15,7 @@ public class AccountSsoController {
     @Autowired
     private AccountSsoService ssoService;
 
-
+    private static int accountFindByIdCache = 0;
 
 
     @RequestMapping(path = "/welcome", method = RequestMethod.GET)
@@ -84,29 +84,25 @@ public class AccountSsoController {
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public LogoutResult logoutDeleteToken(@RequestBody LogoutInfo li, @RequestHeader HttpHeaders headers){
         System.out.println("[SSO Service][Logout Delete Token] ID:" + li.getId() + "Token:" + li.getToken());
-        if(!li.getToken().equals(accountLoginLogOutCache.getIfPresent("loginToken"))){
-            return  new LogoutResult(false,"Not Login");
-        }
         return ssoService.logoutDeleteToken(li,headers);
     }
 
     @RequestMapping(path = "/account/findById", method = RequestMethod.POST)
     public GetAccountByIdResult getAccountById(@RequestBody GetAccountByIdInfo info, @RequestHeader HttpHeaders headers){
         System.out.println("[SSO Service][Find Account By Id] Account Id:" + info.getAccountId());
-        return ssoService.getAccountById(info,headers);
+        accountFindByIdCache = accountFindByIdCache +1;
+        GetAccountByIdResult getAccountByIdResult = ssoService.getAccountById(info,headers);
+        getAccountByIdResult.setMessage(getAccountByIdResult.getMessage()+"__"+accountFindByIdCache);
+        return getAccountByIdResult;
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/verifyLoginToken/{token}", method = RequestMethod.GET)
     public VerifyResult verifyLoginToken(@PathVariable String token, @RequestHeader HttpHeaders headers){
-        if(token.equals(accountLoginLogOutCache.getIfPresent("loginToken") == null)){
-            return  new VerifyResult(false,"Verify Fail.");
-        }
         return ssoService.verifyLoginToken(token,headers);
     }
 
     public PutLoginResult loginPutToken(String loginId){
-        accountLoginLogOutCache.put("loginToken", loginId);
         return ssoService.loginPutToken(loginId);
     }
 

@@ -11,7 +11,6 @@ spring:
 #      username: user
 #      password: ${MONGODB_PASSWORD}
 #      database: piggymetrics
-<<<<<<< HEAD
       port: 27017
 
 #  zipkin:
@@ -19,6 +18,4 @@ spring:
   sleuth:
     sampler:
       percentage: 1.0
-=======
       port: 27017
->>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a

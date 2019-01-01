@@ -78,7 +78,10 @@ public class CancelController {
                 return null;
             }
         }
-        cancelOrderResult.setMessage(cancelOrderResult.getMessage()+"__"+cancelOrderCache);
+        if (cancelOrderResult.getMessage().contains("__"))
+            return cancelOrderResult;
+        else
+            cancelOrderResult.setMessage(cancelOrderResult.getMessage() + "__" + cancelOrderCache);
         return cancelOrderResult;
     }
 

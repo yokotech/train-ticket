@@ -18,11 +18,18 @@ public class CancelServiceImpl implements CancelService{
     @Autowired
     private RestTemplate restTemplate;
 
+    private static int getOrderClientNum = 0;
+    private static int getAccountByIdClientNum = 0;
+
     @Override
     public CancelOrderResult cancelOrder(CancelOrderInfo info,String loginToken,String loginId, HttpHeaders headers) throws Exception{
         GetOrderByIdInfo getFromOrderInfo = new GetOrderByIdInfo();
         getFromOrderInfo.setOrderId(info.getOrderId());
+
         GetOrderResult orderResult = getOrderByIdFromOrder(getFromOrderInfo, headers);
+
+        int getOrderNum = Integer.parseInt(orderResult.getMessage().split("__")[1]);
+
         if(orderResult.isStatus() == true){
             System.out.println("[Cancel Order Service][Cancel Order] Order found G|H");
             Order order = orderResult.getOrder();
@@ -48,7 +55,10 @@ public class CancelServiceImpl implements CancelService{
 
                         GetAccountByIdInfo getAccountByIdInfo = new GetAccountByIdInfo();
                         getAccountByIdInfo.setAccountId(order.getAccountId().toString());
+
                         GetAccountByIdResult result = getAccount(getAccountByIdInfo, headers);
+
+                        int getAccount = Integer.parseInt(result.getMessage().split("__")[1]);
                         if(result.isStatus() == false){
                             return null;
                         }
@@ -68,7 +78,12 @@ public class CancelServiceImpl implements CancelService{
                         notifyInfo.setStartingTime(order.getTravelTime().toString());
 
                         sendEmail(notifyInfo, headers);
-
+                        if(getOrderNum <= getOrderClientNum &&  getAccount <= getAccountByIdClientNum){
+                            finalResult.setMessage(finalResult.getMessage()+"__0");
+                        }else{
+                            getOrderClientNum = getOrderNum;
+                            getAccountByIdClientNum = getAccount;
+                        }
                     }else{
                         System.out.println("[Cancel Order Service][Draw Back Money] Fail.");
                     }
