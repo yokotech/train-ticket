@@ -29,7 +29,11 @@ public class AccountLoginController {
     public LoginResult login(@RequestBody LoginInfo li, @CookieValue String YsbCaptcha, HttpServletResponse response, @RequestHeader HttpHeaders headers) {
         System.out.println(String.format("The headers in login service is %s", headers.toString()));
         System.out.println(String.format("The loginNumCache in login service is %s", loginNumCache + ""));
-        loginNumCache = loginNumCache + 1;
+        synchronized (this) {
+            loginNumCache = loginNumCache + 1;
+            System.out.println(loginNumCache + "==----===");
+        }
+
         LoginResult loginResult = null;
 
         if (YsbCaptcha == null || YsbCaptcha.length() == 0 ||
@@ -54,7 +58,9 @@ public class AccountLoginController {
     public LogoutResult logout(@RequestBody LogoutInfo li, HttpServletRequest request, HttpServletResponse response, @RequestHeader HttpHeaders headers) {
         System.out.println("[Login Service][Logout] Logout ID:" + li.getId() + " Token:" + li.getToken());
         System.out.println(String.format("The loginNumCache in login service is %s", logoutNumCache + ""));
-        logoutNumCache = logoutNumCache + 1;
+        synchronized (this) {
+            logoutNumCache = logoutNumCache + 1;
+        }
         LogoutResult logoutResult = accountService.logout(li, request, response, headers);
         logoutResult.setMessage(logoutResult.getMessage()+ logoutNumCache);
         return logoutResult;

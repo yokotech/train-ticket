@@ -6,7 +6,6 @@ server:
 
 spring:
   application:
-<<<<<<< HEAD
     name: ts-login-service
 
 #  zipkin:
@@ -14,6 +13,3 @@ spring:
   sleuth:
     sampler:
       percentage: 1.0
-=======
-    name: ts-login-service
->>>>>>> 0879857d089cc44ea2b6ea330bd0070ec71a437a
