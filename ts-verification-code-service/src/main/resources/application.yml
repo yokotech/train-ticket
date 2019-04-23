@@ -9,8 +9,6 @@ spring:
   data:
     mongodb:
       host: ts-verification-code-mongo
-#      username: user
-#      password: ${MONGODB_PASSWORD}
       database: ts
       port: 27017
   zipkin:

@@ -9,15 +9,6 @@ services:
     networks:
       - my-network
 
-  # kafka:
-  #   container_name: kafka
-  #   image: spotify/kafka:latest
-  #   ports:
-  #    - 2181:2181
-  #    - 9092:9092
-  #   networks:
-  #     - my-network
-
   zipkin:
     image: openzipkin/zipkin
     ports:
@@ -25,12 +16,12 @@ services:
     networks:
       - my-network
 
-  redis:
-    image: redis
-    ports:
-      - 6379:6379
-    networks:
-      - my-network
+#  redis:
+#    image: redis
+#    ports:
+#      - 6379:6379
+#    networks:
+#      - my-network
 
 
   ts-ui-dashboard:
@@ -414,27 +405,27 @@ services:
         networks:
           - my-network
 
-  ts-voucher-mysql:
-         image: mysql
-         expose:
-            - "3306"
-         environment:
-           MYSQL_ROOT_PASSWORD: root
-         networks:
-           - my-network
-
-  ts-voucher-service:
-          build: ts-voucher-service
-          image: ts/ts-voucher-service
-          restart: always
-          ports:
-            - 16101:16101
-          depends_on:
-            - ts-voucher-mysql
-          volumes:
-            - /var/lib/mysql
-          networks:
-            - my-network
+#  ts-voucher-mysql:
+#         image: mysql
+#         expose:
+#            - "3306"
+#         environment:
+#           MYSQL_ROOT_PASSWORD: root
+#         networks:
+#           - my-network
+#
+#  ts-voucher-service:
+#          build: ts-voucher-service
+#          image: ts/ts-voucher-service
+#          restart: always
+#          ports:
+#            - 16101:16101
+#          depends_on:
+#            - ts-voucher-mysql
+#          volumes:
+#            - /var/lib/mysql
+#          networks:
+#            - my-network
 
   ts-food-map-service:
         build: ts-food-map-service

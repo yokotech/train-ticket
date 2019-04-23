@@ -1,12 +1,10 @@
 package adminorder.domain.bean;
 
-import org.springframework.data.annotation.Id;
 import java.util.Date;
 import java.util.UUID;
 
 public class Order {
 
-    @Id
     private UUID id;
 
     private Date boughtDate;

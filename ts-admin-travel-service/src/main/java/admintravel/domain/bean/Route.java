@@ -1,14 +1,9 @@
 package admintravel.domain.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.ArrayList;
 
 public class Route {
 
-    @Id
     private String id;
 
     private ArrayList<String> stations;

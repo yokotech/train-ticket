@@ -1,14 +1,11 @@
 package admintravel.domain.request;
 
-import org.springframework.data.annotation.Id;
-
 import java.util.Date;
 
 
 public class AddAndModifyTravelRequest {
     private String loginId;
 
-    @Id
     private String tripId;
 
     private String trainTypeId;

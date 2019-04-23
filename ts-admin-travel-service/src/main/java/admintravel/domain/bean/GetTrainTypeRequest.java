@@ -1,13 +1,7 @@
 package admintravel.domain.bean;
 
-import org.springframework.data.annotation.Id;
-
-import javax.validation.Valid;
-
-
 public class GetTrainTypeRequest {
-    @Valid
-    @Id
+
     private String id;
 
     public GetTrainTypeRequest(){

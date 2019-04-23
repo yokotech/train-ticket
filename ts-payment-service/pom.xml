@@ -9,7 +9,6 @@
 	<packaging>jar</packaging>
 
 	<name>ts-payment-service</name>
-	<description></description>
 
 	<parent>
 		<groupId>org.services</groupId>
