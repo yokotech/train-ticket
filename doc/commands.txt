@@ -1,3 +1,7 @@
+kubeadm join 10.141.212.24:6443 --token qizmw0.4etyr0zseefs5s5o --discovery-token-ca-cert-hash sha256:e2adf3f27f9f30edf89f2cd67efd53d72090820f537c3a7c80b3f4af8f83681e
+
+
+
 1.停止所有的container，这样才能够删除其中的images：
 
 docker stop $(docker ps -a -q)
