@@ -1,6 +1,3 @@
-kubeadm join 10.141.212.24:6443 --token qizmw0.4etyr0zseefs5s5o --discovery-token-ca-cert-hash sha256:e2adf3f27f9f30edf89f2cd67efd53d72090820f537c3a7c80b3f4af8f83681e
-
-
 
 1.停止所有的container，这样才能够删除其中的images：
 
@@ -39,3 +36,45 @@ docker images|grep none|awk '{print $3 }'|xargs docker rmi
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+kubeadm join 10.141.212.24:6443 --token w4p89d.ps7l2a64agyf194o \
+    --discovery-token-ca-cert-hash sha256:0ce75a43ee23b5ca2ccf3afa28bc2b514540f52d196f17aab741a3ce870728a8
+
+
+下不到包的话从docker-hub下，然后重新tag一下
+
+
+docker pull mirrorgooglecontainers/kube-apiserver:v1.14.1
+docker pull mirrorgooglecontainers/kube-controller-manager:v1.14.1
+docker pull mirrorgooglecontainers/kube-scheduler:v1.14.1
+docker pull mirrorgooglecontainers/kube-proxy:v1.14.1
+docker pull mirrorgooglecontainers/pause:3.1
+docker pull mirrorgooglecontainers/etcd:3.3.10
+docker pull coredns/coredns:1.3.1
+
+
+docker tag docker.io/mirrorgooglecontainers/kube-apiserver:v1.14.1 k8s.gcr.io/kube-apiserver:v1.14.1
+docker tag docker.io/mirrorgooglecontainers/kube-controller-manager:v1.14.1 k8s.gcr.io/kube-controller-manager:v1.14.1
+docker tag docker.io/mirrorgooglecontainers/kube-scheduler:v1.14.1 k8s.gcr.io/kube-scheduler:v1.14.1
+docker tag docker.io/mirrorgooglecontainers/kube-proxy:v1.14.1 k8s.gcr.io/kube-proxy:v1.14.1
+docker tag docker.io/mirrorgooglecontainers/pause:3.1 k8s.gcr.io/pause:3.1
+docker tag docker.io/mirrorgooglecontainers/etcd:3.3.10 k8s.gcr.io/etcd:3.3.10
+docker tag docker.io/coredns/coredns:1.3.1 k8s.gcr.io/coredns:1.3.1

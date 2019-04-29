@@ -29,18 +29,17 @@ EOF
 
 ## Step 5: Install kubeadm
 Install kubeadm using the following instructions:   
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo   
-[kubernetes]   
-name=Kubernetes   
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64   
-enabled=1   
-gpgcheck=1   
-repo_gpgcheck=1  
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg    https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg  
-EOF   
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo  
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+
 setenforce 0    
 yum install -y kubelet kubeadm kubectl
 systemctl enable kubelet && systemctl start kubelet  
+
 
 cat <<EOF >  /etc/sysctl.d/k8s.conf  
 net.bridge.bridge-nf-call-ip6tables = 1  
@@ -70,7 +69,7 @@ kubeadm join 10.141.212.23:6443 --token qrxigf.bdqvtgdzyygj1qek --discovery-toke
 Please write down this instruction, you will use this command to join you node to your cluser.    
 
 ## Step 11: Install a network plugin
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 
 # ==For Slave/Node==

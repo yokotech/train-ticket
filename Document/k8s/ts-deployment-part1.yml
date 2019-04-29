@@ -342,30 +342,6 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: ts-voucher-mysql
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-voucher-mysql
-    spec:
-      containers:
-      - name: ts-voucher-mysql
-        image: 10.141.211.160:5000/master/cluster-ts-mysql
-        imagePullPolicy: IfNotPresent
-        env:
-        # Use secret in real usage
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
-        ports:
-        - containerPort: 3306
-
----
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
   name: ts-food-map-mongo
 spec:
   replicas: 1
@@ -647,17 +623,6 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-voucher-mysql
-spec:
-  ports:
-    - port: 3306
-  selector:
-   app: ts-voucher-mysql
-
----
 
 apiVersion: v1
 kind: Service
