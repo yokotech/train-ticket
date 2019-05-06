@@ -9,8 +9,10 @@ import movies.spring.data.neo4j.repositories.PodRepository;
 import movies.spring.data.neo4j.repositories.VirtualMachineRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.querydsl.EntityPathResolver;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class MovieService {
@@ -71,6 +73,20 @@ public class MovieService {
     }
 
     @Transactional(readOnly = true)
+	public Pod findByPodId(String id){
+		Long idLong = Long.parseLong(id);
+		Optional<Pod> podOptional = podRepository.findById(idLong);
+		return podOptional.get();
+	}
+
+	@Transactional(readOnly = true)
+	public VirtualMachine findByVMId(String id){
+		Long idLong = Long.parseLong(id);
+		Optional<VirtualMachine> vmOptional = virtualMachineRepository.findById(idLong);
+		return vmOptional.get();
+	}
+
+    @Transactional(readOnly = true)
     public Collection<Movie> findByTitleLike(String title) {
         Collection<Movie> result = movieRepository.findByTitleLike(title);
         return result;
@@ -83,30 +99,42 @@ public class MovieService {
 	}
 
 	@Transactional(readOnly = true)
-	public String testCreatePod(){
+	public Pod testCreatePod(){
 		Pod pod = new Pod("jichao-test-pod");
 		Pod newPod = podRepository.save(pod);
 		System.out.println("============ID:" + newPod.getId());
-		return "" + newPod.getId();
+		return newPod;
 	}
 
 	@Transactional(readOnly = true)
-	public String testCreateVirtualMachine(){
+	public VirtualMachine testCreateVirtualMachine(){
 		VirtualMachine vm = new VirtualMachine("jichao-test-virtual-machine");
 		VirtualMachine newVM = virtualMachineRepository.save(vm);
 		System.out.println("============ID:" + newVM.getId() + "=====" + newVM);
-		return "" + newVM.getId();
+		return newVM;
 	}
 
-	public String saveDeploy(){
-		VirtualMachine vm = new VirtualMachine("deploy-jc-vm");
-		Pod pod = new Pod("deploy-jc-pod");
-		Deploy deploy = new Deploy(pod,"deploy-test",vm);
-		Deploy newDeploy = deployRepository.save(deploy);
-		System.out.println("========Deploy ID:" + newDeploy.getId() + "=====");
-		System.out.println("========POD ID:" + newDeploy.getPod().getId() + "=====");
-		System.out.println("========VM ID:" + newDeploy.getVirtualMachine().getId() + "=====");
-		return "" + deploy.getId();
+	public Deploy saveDeploy(){
+		VirtualMachine vm = new VirtualMachine("1-vm1");
+
+		Pod pod = new Pod("1-pod1");
+
+		VirtualMachine vm2 = new VirtualMachine("1-vm2");
+
+		vm = virtualMachineRepository.save(vm);
+		vm2 = virtualMachineRepository.save(vm2);
+		podRepository.save(pod);
+
+		Deploy deploy = new Deploy(pod,"1-deploy",vm);
+		deploy = deployRepository.save(deploy);
+
+		Deploy deploy2 = new Deploy(pod,"1-deploy2",vm2);
+		deploy2 = deployRepository.save(deploy2);
+
+		System.out.println("========Deploy ID:" + deploy.getId() + "=====");
+		System.out.println("========Deploy ID:" + deploy2.getId() + "=====");
+		return deploy;
 	}
+
 
 }

@@ -1,3 +1,4 @@
+mvn spring-boot:run
 
 1.停止所有的container，这样才能够删除其中的images：
 

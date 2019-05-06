@@ -12,8 +12,11 @@ public class Deploy {
     @StartNode
     private Pod pod;
 
-    @Property
+    @Property(name="title")
     private String title;
+
+    @Property(name="className")
+    private String className = this.getClass().toString();
 
     @EndNode
     private VirtualMachine virtualMachine;
@@ -57,6 +60,10 @@ public class Deploy {
 
     public void setVirtualMachine(VirtualMachine virtualMachine) {
         this.virtualMachine = virtualMachine;
+    }
+
+    public String getClassName() {
+        return className;
     }
 }
 
