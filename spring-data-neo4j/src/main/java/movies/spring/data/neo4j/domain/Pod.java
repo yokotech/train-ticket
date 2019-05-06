@@ -1,11 +1,10 @@
 package movies.spring.data.neo4j.domain;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@NodeEntity(label="Pod")
+@NodeEntity
 public class Pod {
 
     @Id
@@ -17,6 +16,9 @@ public class Pod {
 
     @Property(name="className")
     private String className = this.getClass().toString();
+
+    @Labels
+    private Set<String> labels = new HashSet<>();
 
     public Pod() {
     }
@@ -43,5 +45,14 @@ public class Pod {
 
     public String getClassName() {
         return className;
+    }
+
+
+    public Set<String> getLabels() {
+        return labels;
+    }
+
+    public void addLabel(String name) {
+        this.labels.add(name);
     }
 }

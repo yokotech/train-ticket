@@ -96,14 +96,12 @@ public class Neo4jUtil {
                     Iterable<Node> nodes = path.nodes();
                     for (Iterator iter = nodes.iterator(); iter.hasNext(); ) {
                         InternalNode nodeInter = (InternalNode) iter.next();
-                        for(String str: nodeInter.labels()){
-                            System.out.println("标签：" + str);
-                        }
                         Map<String, Object> map = new HashMap<>();
                         //节点上设置的属性
                         map.putAll(nodeInter.asMap());
-                        //外加一个固定属性
+                        //外加2个固定属性
                         map.put("nodeId", nodeInter.id());
+                        map.put("labels", new HashSet<>(nodeInter.labels()).toString());
                         nodeList.add((T) map);
                     }
                     //关系

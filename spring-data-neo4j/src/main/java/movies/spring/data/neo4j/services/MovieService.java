@@ -118,12 +118,18 @@ public class MovieService {
 		VirtualMachine vm = new VirtualMachine("1-vm1");
 
 		Pod pod = new Pod("1-pod1");
+		pod.addLabel("iqwhrqwjels");
 
 		VirtualMachine vm2 = new VirtualMachine("1-vm2");
+		vm2.addLabel("safjkashrfjkq3hkdklja");
 
 		vm = virtualMachineRepository.save(vm);
 		vm2 = virtualMachineRepository.save(vm2);
 		podRepository.save(pod);
+
+		for(String str: vm2.getLabels()){
+			System.out.println("VM2标签：" + str);
+		}
 
 		Deploy deploy = new Deploy(pod,"1-deploy",vm);
 		deploy = deployRepository.save(deploy);
