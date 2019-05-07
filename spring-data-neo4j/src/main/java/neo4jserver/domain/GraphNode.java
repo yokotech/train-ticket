@@ -1,12 +1,15 @@
-package movies.spring.data.neo4j.domain;
+package neo4jserver.domain;
 
 import org.neo4j.ogm.annotation.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
-@NodeEntity(label="Virtual-Machine")
-public class VirtualMachine {
+/**
+ * 是所有Entity节点的父类
+ * 注意：Property请和成员变量名保持严格一致
+ */
+@NodeEntity
+public class GraphNode {
 
     @Id
     @GeneratedValue
@@ -16,15 +19,15 @@ public class VirtualMachine {
     private String name;
 
     @Property(name="className")
-    private String className = this.getClass().toString();
+    private String className = this.getClass().getName();
 
     @Labels
     private Set<String> labels = new HashSet<>();
 
-    public VirtualMachine() {
+    public GraphNode() {
     }
 
-    public VirtualMachine(String name) {
+    public GraphNode(String name) {
         this.name = name;
     }
 
@@ -48,9 +51,16 @@ public class VirtualMachine {
         return className;
     }
 
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     public Set<String> getLabels() {
         return labels;
+    }
+
+    public void setLabels(Set<String> labels) {
+        this.labels = labels;
     }
 
     public void addLabel(String name) {

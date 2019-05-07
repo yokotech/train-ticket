@@ -1,4 +1,4 @@
-package movies.spring.data.neo4j.domain;
+package neo4jserver.domain;
 
 import org.neo4j.ogm.annotation.*;
 

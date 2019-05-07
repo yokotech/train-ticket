@@ -1,4 +1,4 @@
-package movies.spring.data.neo4j.utils;
+package neo4jserver.utils;
 
 import org.neo4j.driver.internal.InternalNode;
 import org.neo4j.driver.internal.InternalRelationship;
@@ -16,8 +16,6 @@ import java.util.*;
 
 /**
  * 通用的neo4j调用类
- *
- * @version 1.0 18-6-5 上午11:21
  */
 @Component
 public class Neo4jUtil {
@@ -100,8 +98,8 @@ public class Neo4jUtil {
                         //节点上设置的属性
                         map.putAll(nodeInter.asMap());
                         //外加2个固定属性
-                        map.put("nodeId", nodeInter.id());
-                        map.put("labels", new HashSet<>(nodeInter.labels()).toString());
+                        map.put("id", nodeInter.id());
+                        map.put("labels", new HashSet<>(nodeInter.labels()));
                         nodeList.add((T) map);
                     }
                     //关系

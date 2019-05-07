@@ -1,4 +1,4 @@
-package movies.spring.data.neo4j.utils;
+package neo4jserver.utils;
 
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
@@ -12,10 +12,13 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Neo4jConf {
+
     @Value("${spring.data.neo4j.uri}")
     private String url;
+
     @Value("${spring.data.neo4j.username}")
     private String username;
+
     @Value("${spring.data.neo4j.password}")
     private String password;
 

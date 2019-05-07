@@ -1,25 +1,22 @@
-package movies.spring.data.neo4j.services;
+package neo4jserver.services;
 
 import java.util.*;
 
-import movies.spring.data.neo4j.domain.*;
-import movies.spring.data.neo4j.repositories.DeployRepository;
-import movies.spring.data.neo4j.repositories.MovieRepository;
-import movies.spring.data.neo4j.repositories.PodRepository;
-import movies.spring.data.neo4j.repositories.VirtualMachineRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.querydsl.EntityPathResolver;
+import neo4jserver.domain.*;
+import neo4jserver.repositories.DeployRepository;
+import neo4jserver.repositories.PodRepository;
+import neo4jserver.repositories.VirtualMachineRepository;
+import neo4jserver.utils.MapToObjUtil;
+import neo4jserver.utils.Neo4jUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class MovieService {
 
-    private final static Logger LOG = LoggerFactory.getLogger(MovieService.class);
-
-	private final MovieRepository movieRepository;
+	@Autowired
+	private Neo4jUtil neo4jUtil;
 
 	private final PodRepository podRepository;
 
@@ -27,36 +24,12 @@ public class MovieService {
 
 	private final DeployRepository deployRepository;
 
-	public MovieService(MovieRepository movieRepository, PodRepository podRepository,
+	public MovieService(PodRepository podRepository,
 						VirtualMachineRepository virtualMachineRepository,
 						DeployRepository deployRepository) {
 		this.podRepository = podRepository;
-		this.movieRepository = movieRepository;
 		this.virtualMachineRepository = virtualMachineRepository;
 		this.deployRepository = deployRepository;
-	}
-
-	private Map<String, Object> toD3Format(Collection<Movie> movies) {
-		List<Map<String, Object>> nodes = new ArrayList<>();
-		List<Map<String, Object>> rels = new ArrayList<>();
-		int i = 0;
-		Iterator<Movie> result = movies.iterator();
-		while (result.hasNext()) {
-			Movie movie = result.next();
-			nodes.add(map("title", movie.getTitle(), "label", "movie"));
-			int target = i;
-			i++;
-			for (Role role : movie.getRoles()) {
-				Map<String, Object> actor = map("title", role.getPerson().getName(), "label", "actor");
-				int source = nodes.indexOf(actor);
-				if (source == -1) {
-					nodes.add(actor);
-					source = i++;
-				}
-				rels.add(map("source", source, "target", target));
-			}
-		}
-		return map("nodes", nodes, "links", rels);
 	}
 
 	private Map<String, Object> map(String key1, Object value1, String key2, Object value2) {
@@ -65,12 +38,6 @@ public class MovieService {
 		result.put(key2, value2);
 		return result;
 	}
-
-    @Transactional(readOnly = true)
-    public Movie findByTitle(String title) {
-        Movie result = movieRepository.findByTitle(title);
-        return result;
-    }
 
     @Transactional(readOnly = true)
 	public Pod findByPodId(String id){
@@ -86,21 +53,11 @@ public class MovieService {
 		return vmOptional.get();
 	}
 
-    @Transactional(readOnly = true)
-    public Collection<Movie> findByTitleLike(String title) {
-        Collection<Movie> result = movieRepository.findByTitleLike(title);
-        return result;
-    }
 
-	@Transactional(readOnly = true)
-	public Map<String, Object>  graph(int limit) {
-		Collection<Movie> result = movieRepository.graph(limit);
-		return toD3Format(result);
-	}
 
 	@Transactional(readOnly = true)
 	public Pod testCreatePod(){
-		Pod pod = new Pod("jichao-test-pod");
+		Pod pod = new Pod("jichao-test-pod",5);
 		Pod newPod = podRepository.save(pod);
 		System.out.println("============ID:" + newPod.getId());
 		return newPod;
@@ -108,19 +65,20 @@ public class MovieService {
 
 	@Transactional(readOnly = true)
 	public VirtualMachine testCreateVirtualMachine(){
-		VirtualMachine vm = new VirtualMachine("jichao-test-virtual-machine");
+		VirtualMachine vm = new VirtualMachine("jichao-test-virtual-machine",1024,2.5);
 		VirtualMachine newVM = virtualMachineRepository.save(vm);
 		System.out.println("============ID:" + newVM.getId() + "=====" + newVM);
 		return newVM;
 	}
 
+	@Transactional(readOnly = true)
 	public Deploy saveDeploy(){
-		VirtualMachine vm = new VirtualMachine("1-vm1");
+		VirtualMachine vm = new VirtualMachine("1-vm1",1024,2.5);
 
-		Pod pod = new Pod("1-pod1");
+		Pod pod = new Pod("1-pod1",5);
 		pod.addLabel("iqwhrqwjels");
 
-		VirtualMachine vm2 = new VirtualMachine("1-vm2");
+		VirtualMachine vm2 = new VirtualMachine("1-vm2",1024,2.5);
 		vm2.addLabel("safjkashrfjkq3hkdklja");
 
 		vm = virtualMachineRepository.save(vm);
@@ -142,5 +100,27 @@ public class MovieService {
 		return deploy;
 	}
 
+	@Transactional(readOnly = true)
+	public Map<String, Object> getShortPath(){
+		Map<String, Object> retMap = new HashMap<>();
+		//cql语句
+		String cql = "match l=shortestPath(({name:'1-vm1'})-[*]-({name:'1-vm2'})) return l";
+		//待返回的值，与cql return后的值顺序对应
+		Set<Map<String ,Object>> nodeList = new HashSet<>();
+		Set<Map<String ,Object>> edgeList = new HashSet<>();
+		neo4jUtil.getPathList(cql,nodeList,edgeList);
+		System.out.println("=======");
+		retMap.put("nodeList",nodeList);
+		retMap.put("edgeList",edgeList);
+
+		for(Map<String ,Object> tempMap: nodeList){
+			String fullClassName = (String)tempMap.get("className");
+			System.out.println("=====" + fullClassName);
+			Object temp = MapToObjUtil.toGraphNodeBean(fullClassName, tempMap);
+			System.out.println("ResultClass" + temp.getClass().toString());
+		}
+
+		return retMap;
+	}
 
 }
