@@ -1,12 +1,16 @@
 package neo4jserver.repositories;
 
 import neo4jserver.domain.VirtualMachine;
+import neo4jserver.domain.VirtualMachineResult;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-
 import java.util.Optional;
 
 public interface VirtualMachineRepository extends Neo4jRepository<VirtualMachine, Long> {
 
     Optional<VirtualMachine> findById(Long id);
+
+    @Query("MATCH (n:VirtualMachine) where id(n)={0} return labels(n) as labels, n as node")
+    VirtualMachineResult getVitualMachineWithLabels(Long virtualMachineId);
 
 }

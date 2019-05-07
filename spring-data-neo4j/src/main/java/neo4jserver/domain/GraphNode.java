@@ -66,4 +66,8 @@ public class GraphNode {
     public void addLabel(String name) {
         this.labels.add(name);
     }
+
+    public void removeAllLabel(){
+        this.labels.clear();
+    }
 }

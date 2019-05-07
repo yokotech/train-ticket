@@ -15,24 +15,24 @@ public class MovieController {
 		this.movieService = movieService;
 	}
 
-	@GetMapping("/getPod/{id}")
+	@GetMapping("/pod/{id}")
 	public Pod getPod(@PathVariable String id){
 		return movieService.findByPodId(id);
 	}
 
-	@GetMapping("/addPod")
-	public Pod addPod(){
-		return movieService.testCreatePod();
+	@PostMapping("/pod")
+	public Pod postPod(@RequestBody Pod pod){
+		return movieService.postPod(pod);
 	}
 
-	@GetMapping("/getVirtualMachine/{id}")
+	@GetMapping("/virtualMachine/{id}")
 	public VirtualMachine getVirtualMachine(@PathVariable String id){
 		return movieService.findByVMId(id);
 	}
 
-	@GetMapping("/addVirtualMachine")
-	public VirtualMachine addVirtualMachine(){
-		return movieService.testCreateVirtualMachine();
+	@PostMapping("/virtualMachine")
+	public VirtualMachine addVirtualMachine(@RequestBody VirtualMachine vm){
+		return movieService.postVirtualMachine(vm);
 	}
 
 	@GetMapping("/addDeploy")
