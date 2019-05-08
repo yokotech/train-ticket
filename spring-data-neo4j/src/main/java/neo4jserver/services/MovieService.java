@@ -46,6 +46,30 @@ public class MovieService {
 	}
 
 	@Transactional(readOnly = true)
+	public Deploy findByDeployId(String id){
+		Long idLong = Long.parseLong(id);
+		Optional<Deploy> deploy = deployRepository.findById(idLong);
+		return deploy.get();
+	}
+
+	@Transactional(readOnly = true)
+	public Deploy postDeploy(Deploy deploy){
+
+		VirtualMachine vm = deploy.getVirtualMachine();
+		Pod pod = deploy.getPod();
+
+		vm = virtualMachineRepository.save(vm);
+		pod = podRepository.save(pod);
+
+		deploy.setVirtualMachine(vm);
+		deploy.setPod(pod);
+
+		deploy = deployRepository.save(deploy);
+
+		return deploy;
+	}
+
+	@Transactional(readOnly = true)
 	public VirtualMachine findByVMId(String id){
 		Long idLong = Long.parseLong(id);
         VirtualMachineResult vmr = virtualMachineRepository.getVitualMachineWithLabels(idLong);

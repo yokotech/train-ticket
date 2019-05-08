@@ -31,9 +31,23 @@ public class MovieController {
 	}
 
 	@PostMapping("/virtualMachine")
-	public VirtualMachine addVirtualMachine(@RequestBody VirtualMachine vm){
+	public VirtualMachine postVirtualMachine(@RequestBody VirtualMachine vm){
 		return movieService.postVirtualMachine(vm);
 	}
+
+	@GetMapping("/deploy/{id}")
+	public Deploy getDeploy(@PathVariable String id){
+		return movieService.findByDeployId(id);
+	}
+
+	@PostMapping("/deploy")
+	public Deploy postDeploy(@RequestBody Deploy deploy){
+		return movieService.postDeploy(deploy);
+	}
+
+
+
+
 
 	@GetMapping("/addDeploy")
 	public Deploy addDeploy(){
