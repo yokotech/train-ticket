@@ -2,6 +2,7 @@ package collector.controller;
 
 import collector.domain.apinode.NodeList;
 import collector.domain.apipod.PodList;
+import collector.domain.apiservice.AppServiceList;
 import collector.service.DataCollectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,5 +23,12 @@ public class DataCollectorController {
     public PodList getPodList() {
         return dataCollectorService.getPodList();
     }
+
+    @GetMapping("/service")
+    public AppServiceList getAppServiceList(){
+        return dataCollectorService.getAppServiceList();
+    }
+
+
 
 }
