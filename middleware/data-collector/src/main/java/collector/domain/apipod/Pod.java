@@ -2,7 +2,7 @@ package collector.domain.apipod;
 
 public class Pod {
 
-    private PodMetaData metadata;
+    private PodMetadata metadata;
 
     private PodSpec spec;
 
@@ -11,11 +11,11 @@ public class Pod {
     public Pod() {
     }
 
-    public PodMetaData getMetadata() {
+    public PodMetadata getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(PodMetaData metadata) {
+    public void setMetadata(PodMetadata metadata) {
         this.metadata = metadata;
     }
 

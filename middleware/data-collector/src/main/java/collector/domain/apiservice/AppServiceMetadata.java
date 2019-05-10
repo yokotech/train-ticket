@@ -1,6 +1,6 @@
-package collector.domain.apipod;
+package collector.domain.apiservice;
 
-public class PodMetaData {
+public class AppServiceMetadata {
 
     private String name;
 
@@ -8,9 +8,7 @@ public class PodMetaData {
 
     private String selfLink;
 
-    private PodLabels labels;
-
-    public PodMetaData() {
+    public AppServiceMetadata() {
     }
 
     public String getName() {
@@ -35,13 +33,5 @@ public class PodMetaData {
 
     public void setSelfLink(String selfLink) {
         this.selfLink = selfLink;
-    }
-
-    public PodLabels getLabels() {
-        return labels;
-    }
-
-    public void setLabels(PodLabels labels) {
-        this.labels = labels;
     }
 }
