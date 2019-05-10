@@ -1,4 +1,4 @@
-package neo4jserver.domain;
+package neo4jserver.domain.entities;
 
 import org.neo4j.ogm.annotation.*;
 

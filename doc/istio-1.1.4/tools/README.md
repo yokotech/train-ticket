@@ -202,7 +202,7 @@ various dimensions:
 
 If you have a change that you think might affect performance, then you can run these tests to check the affects.
 
-To establish a baseline, simply deploy a perf cluster using the instructions above. Then run
+To establish a baseline, simply virtualMachineAndPod a perf cluster using the instructions above. Then run
 ```run_canonical_perf_tests.sh``` to establish the baseline. You will see output that looks like this:
 
 ```

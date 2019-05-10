@@ -2,9 +2,9 @@ package neo4jserver.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import neo4jserver.domain.GraphNode;
-import neo4jserver.domain.Pod;
-import neo4jserver.domain.VirtualMachine;
+import neo4jserver.domain.entities.GraphNode;
+import neo4jserver.domain.entities.Pod;
+import neo4jserver.domain.entities.VirtualMachine;
 
 import java.util.Map;
 

@@ -39,25 +39,22 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 
 
+//如何打开k8s
+https://www.cnblogs.com/keithtt/p/8251353.html
+
+
+
+docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+kubectl label namespace istio-system istio-injection=disabled --overwri
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-kubeadm join 10.141.212.24:6443 --token w4p89d.ps7l2a64agyf194o \
-    --discovery-token-ca-cert-hash sha256:0ce75a43ee23b5ca2ccf3afa28bc2b514540f52d196f17aab741a3ce870728a8
+kubeadm join 10.141.212.24:6443 --token s36ox0.k9xm36awd1o0jnwi \
+    --discovery-token-ca-cert-hash sha256:3ba87e5b6dcf899ea0a94e7bd97adef72236781d92694ac8c302cbd8b273ceb4
 
 
 下不到包的话从docker-hub下，然后重新tag一下

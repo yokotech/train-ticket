@@ -1,9 +1,11 @@
-package neo4jserver.domain;
+package neo4jserver.domain.relationships;
 
+import neo4jserver.domain.entities.Pod;
+import neo4jserver.domain.entities.VirtualMachine;
 import org.neo4j.ogm.annotation.*;
 
 @RelationshipEntity(type = "DEPLOY_ON")
-public class Deploy {
+public class VirtualMachineAndPod {
 
     @Id
     @GeneratedValue
@@ -12,8 +14,8 @@ public class Deploy {
     @StartNode
     private Pod pod;
 
-    @Property(name="title")
-    private String title;
+    @Property(name="relation")
+    private String relation;
 
     @Property(name="className")
     private String className = this.getClass().toString();
@@ -21,12 +23,12 @@ public class Deploy {
     @EndNode
     private VirtualMachine virtualMachine;
 
-    public Deploy() {
+    public VirtualMachineAndPod() {
     }
 
-    public Deploy(Pod pod, String title, VirtualMachine virtualMachine) {
+    public VirtualMachineAndPod(Pod pod, String relation, VirtualMachine virtualMachine) {
         this.pod = pod;
-        this.title = title;
+        this.relation = relation;
         this.virtualMachine = virtualMachine;
     }
 
@@ -46,12 +48,20 @@ public class Deploy {
         this.pod = pod;
     }
 
-    public String getTitle() {
-        return title;
+    public String getRelation() {
+        return relation;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public VirtualMachine getVirtualMachine() {
@@ -60,10 +70,6 @@ public class Deploy {
 
     public void setVirtualMachine(VirtualMachine virtualMachine) {
         this.virtualMachine = virtualMachine;
-    }
-
-    public String getClassName() {
-        return className;
     }
 }
 

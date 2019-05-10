@@ -16,7 +16,7 @@
     (2) Use the instructions in Part2 in [Docker Tag&Upload.md] to upload the docker images.   
 
 ## Step 3: Deploy on K8S
-    In this step, you will deploy the Train-Ticket system on K8S.
+    In this step, you will virtualMachineAndPod the Train-Ticket system on K8S.
     (1) Move "ts-deployment-part1.yml", "ts-deployment-part2.yml", "ts-deployment-part3.yml".   
     (2) Use the instrcution "kubectl apply -f ts-deployment-part1.yml"   
     (3) Use the instrcution "kubectl apply -f ts-deployment-part2.yml"   

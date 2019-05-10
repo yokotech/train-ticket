@@ -1,7 +1,12 @@
 package neo4jserver.controller;
 
 import java.util.*;
-import neo4jserver.domain.*;
+
+import neo4jserver.domain.entities.AppService;
+import neo4jserver.domain.entities.Container;
+import neo4jserver.domain.entities.Pod;
+import neo4jserver.domain.entities.VirtualMachine;
+import neo4jserver.domain.relationships.VirtualMachineAndPod;
 import neo4jserver.services.MovieService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +18,26 @@ public class MovieController {
 	
 	public MovieController(MovieService movieService) {
 		this.movieService = movieService;
+	}
+
+	@GetMapping("/container/{id}")
+	public Container getContainer(@PathVariable String id){
+		return movieService.findByContainerId(id);
+	}
+
+	@PostMapping("/container")
+	public Container postContainer(@RequestBody Container container){
+		return movieService.postContainer(container);
+	}
+
+	@GetMapping("/appService/{id}")
+	public AppService getAppService(@PathVariable String id){
+		return movieService.findByAppServiceId(id);
+	}
+
+	@PostMapping("/appService")
+	public AppService postAppService(@RequestBody AppService appService){
+		return movieService.postAppService(appService);
 	}
 
 	@GetMapping("/pod/{id}")
@@ -36,21 +61,17 @@ public class MovieController {
 	}
 
 	@GetMapping("/deploy/{id}")
-	public Deploy getDeploy(@PathVariable String id){
+	public VirtualMachineAndPod getDeploy(@PathVariable String id){
 		return movieService.findByDeployId(id);
 	}
 
 	@PostMapping("/deploy")
-	public Deploy postDeploy(@RequestBody Deploy deploy){
-		return movieService.postDeploy(deploy);
+	public VirtualMachineAndPod postDeploy(@RequestBody VirtualMachineAndPod virtualMachineAndPod){
+		return movieService.postDeploy(virtualMachineAndPod);
 	}
 
-
-
-
-
 	@GetMapping("/addDeploy")
-	public Deploy addDeploy(){
+	public VirtualMachineAndPod addDeploy(){
 		return movieService.saveDeploy();
 	}
 
