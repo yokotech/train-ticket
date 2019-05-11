@@ -180,54 +180,54 @@ public class MovieService {
 		return newVM;
 	}
 
-	@Transactional(readOnly = true)
-	public VirtualMachineAndPod saveDeploy(){
-		VirtualMachine vm = new VirtualMachine("1-vm1",1024,2.5);
-
-		Pod pod = new Pod("1-pod1",5);
-
-		VirtualMachine vm2 = new VirtualMachine("1-vm2",1024,2.5);
-
-		vm = virtualMachineRepository.save(vm);
-		vm2 = virtualMachineRepository.save(vm2);
-		pod = podRepository.save(pod);
-
-		VirtualMachineAndPod virtualMachineAndPod = new VirtualMachineAndPod(pod,"1-virtualMachineAndPod",vm);
-		virtualMachineAndPod = virtualMachineAndPodRepository.save(virtualMachineAndPod);
-
-		VirtualMachineAndPod virtualMachineAndPod2 = new VirtualMachineAndPod(pod,"1-virtualMachineAndPod2",vm2);
-		virtualMachineAndPod2 = virtualMachineAndPodRepository.save(virtualMachineAndPod2);
-
-
-		System.out.println("========VirtualMachineAndPod ID:" + virtualMachineAndPod.getId() + "=====");
-		System.out.println("========VirtualMachineAndPod ID:" + virtualMachineAndPod2.getId() + "=====");
-		return virtualMachineAndPod;
-	}
-
-	@Transactional(readOnly = true)
-	public Map<String, Object> getShortPath(){
-		Map<String, Object> retMap = new HashMap<>();
-		//cql语句
-		String cql = "match l=shortestPath(({name:'1-vm1'})-[*]-({name:'1-vm2'})) return l";
-		//待返回的值，与cql return后的值顺序对应
-		Set<Map<String ,Object>> nodeList = new HashSet<>();
-		Set<Map<String ,Object>> edgeList = new HashSet<>();
-		neo4jUtil.getPathList(cql,nodeList,edgeList);
-		System.out.println("=======");
-
-		retMap.put("edgeList",edgeList);
-
-		Set<GraphNode> retNodeSet = new HashSet<>();
-		for(Map<String ,Object> tempMap: nodeList){
-			String fullClassName = (String)tempMap.get("className");
-			System.out.println("=====" + fullClassName);
-			GraphNode temp = MapToObjUtil.toGraphNodeBean(fullClassName, tempMap);
-			retNodeSet.add(temp);
-			System.out.println("ResultClass" + temp.getClass().toString());
-		}
-		retMap.put("nodeList",retNodeSet);
-
-		return retMap;
-	}
+//	@Transactional(readOnly = true)
+//	public VirtualMachineAndPod saveDeploy(){
+//		VirtualMachine vm = new VirtualMachine("1-vm1",1024,2.5);
+//
+//		Pod pod = new Pod("1-pod1",5);
+//
+//		VirtualMachine vm2 = new VirtualMachine("1-vm2",1024,2.5);
+//
+//		vm = virtualMachineRepository.save(vm);
+//		vm2 = virtualMachineRepository.save(vm2);
+//		pod = podRepository.save(pod);
+//
+//		VirtualMachineAndPod virtualMachineAndPod = new VirtualMachineAndPod(pod,"1-virtualMachineAndPod",vm);
+//		virtualMachineAndPod = virtualMachineAndPodRepository.save(virtualMachineAndPod);
+//
+//		VirtualMachineAndPod virtualMachineAndPod2 = new VirtualMachineAndPod(pod,"1-virtualMachineAndPod2",vm2);
+//		virtualMachineAndPod2 = virtualMachineAndPodRepository.save(virtualMachineAndPod2);
+//
+//
+//		System.out.println("========VirtualMachineAndPod ID:" + virtualMachineAndPod.getId() + "=====");
+//		System.out.println("========VirtualMachineAndPod ID:" + virtualMachineAndPod2.getId() + "=====");
+//		return virtualMachineAndPod;
+//	}
+//
+//	@Transactional(readOnly = true)
+//	public Map<String, Object> getShortPath(){
+//		Map<String, Object> retMap = new HashMap<>();
+//		//cql语句
+//		String cql = "match l=shortestPath(({name:'1-vm1'})-[*]-({name:'1-vm2'})) return l";
+//		//待返回的值，与cql return后的值顺序对应
+//		Set<Map<String ,Object>> nodeList = new HashSet<>();
+//		Set<Map<String ,Object>> edgeList = new HashSet<>();
+//		neo4jUtil.getPathList(cql,nodeList,edgeList);
+//		System.out.println("=======");
+//
+//		retMap.put("edgeList",edgeList);
+//
+//		Set<GraphNode> retNodeSet = new HashSet<>();
+//		for(Map<String ,Object> tempMap: nodeList){
+//			String fullClassName = (String)tempMap.get("className");
+//			System.out.println("=====" + fullClassName);
+//			GraphNode temp = MapToObjUtil.toGraphNodeBean(fullClassName, tempMap);
+//			retNodeSet.add(temp);
+//			System.out.println("ResultClass" + temp.getClass().toString());
+//		}
+//		retMap.put("nodeList",retNodeSet);
+//
+//		return retMap;
+//	}
 
 }

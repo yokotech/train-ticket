@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class NodeList {
 
-    private ArrayList<Node> items;
+    private ArrayList<ApiNode> items;
 
     public NodeList() {
     }
 
-    public ArrayList<Node> getItems() {
+    public ArrayList<ApiNode> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Node> items) {
+    public void setItems(ArrayList<ApiNode> items) {
         this.items = items;
     }
 }

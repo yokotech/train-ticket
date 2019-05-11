@@ -1,56 +1,43 @@
-package neo4jserver.domain.entities;
+package collector.domain.entities;
 
-import org.neo4j.ogm.annotation.*;
-
-@NodeEntity(label="VirtualMachine")
 public class VirtualMachine extends GraphNode{
 
-    @Property(name="memory")
-    private int memory;
+    private String memory;
 
-    @Property(name="cpu")
-    private double cpu;
+    private String cpu;
 
-    @Property(name="selflink")
     private String selflink;
 
-    @Property(name="kernelVersion")
     private String kernelVersion;
 
-    @Property(name="osImage")
     private String osImage;
 
-    @Property(name="containerRuntimeVersion")
     private String containerRuntimeVersion;
 
-    @Property(name="operatingSystem")
     private String operatingSystem;
 
-    @Property(name="architecture")
     private String architecture;
 
-    @Property(name="type")
     private String type;
 
-    @Property(name="address")
     private String address;
 
     public VirtualMachine() {
     }
 
-    public int getMemory() {
+    public String getMemory() {
         return memory;
     }
 
-    public void setMemory(int memory) {
+    public void setMemory(String memory) {
         this.memory = memory;
     }
 
-    public double getCpu() {
+    public String getCpu() {
         return cpu;
     }
 
-    public void setCpu(double cpu) {
+    public void setCpu(String cpu) {
         this.cpu = cpu;
     }
 

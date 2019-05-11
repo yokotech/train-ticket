@@ -1,12 +1,12 @@
 package collector.domain.apinode;
 
-public class Node {
+public class ApiNode {
 
     private NodeMetadata metadata;
 
     private NodeStatus status;
 
-    public Node() {
+    public ApiNode() {
     }
 
     public NodeMetadata getMetadata() {

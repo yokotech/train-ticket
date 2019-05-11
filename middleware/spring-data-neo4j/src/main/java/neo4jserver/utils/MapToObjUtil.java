@@ -2,13 +2,15 @@ package neo4jserver.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import neo4jserver.domain.entities.GraphNode;
-import neo4jserver.domain.entities.Pod;
-import neo4jserver.domain.entities.VirtualMachine;
+import neo4jserver.domain.entities.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
 public class MapToObjUtil {
+
+    @Autowired
+    private static Gson gson;
 
     public static final GraphNode toGraphNodeBean(String className, Map<String, ? extends Object> map){
         int index = className.lastIndexOf(".");
@@ -20,19 +22,42 @@ public class MapToObjUtil {
                 return getVirtualMachineByMap(map);
             case "GraphNode":
                 return getGraphNode(map);
+            case "AppSerivice":
+                return getAppServiceByMap(map);
+            case "Container":
+                return getContainer(map);
             default:
                 return null;
         }
     }
 
+    public static Container getContainer(Map<String, ? extends Object> map) {
+        Container container = new Container();
+        try{
+            JsonElement jsonElement = gson.toJsonTree(map);
+            container = gson.fromJson(jsonElement, Container.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return container;
+    }
+
+    public static AppService getAppServiceByMap(Map<String, ? extends Object> map){
+        AppService appService = new AppService();
+        try{
+            JsonElement jsonElement = gson.toJsonTree(map);
+            appService = gson.fromJson(jsonElement, AppService.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return appService;
+    }
+
     public static Pod getPodByMap(Map<String, ? extends Object> map){
         Pod pod = new Pod();
         try{
-            Gson gson = new Gson();
             JsonElement jsonElement = gson.toJsonTree(map);
             pod = gson.fromJson(jsonElement, Pod.class);
-            System.out.println(jsonElement.toString());
-            System.out.println("转换完成" + pod.getClassName());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -42,11 +67,8 @@ public class MapToObjUtil {
     public static VirtualMachine getVirtualMachineByMap(Map<String, ? extends Object> map){
         VirtualMachine virtualMachine = new VirtualMachine();
         try{
-            Gson gson = new Gson();
             JsonElement jsonElement = gson.toJsonTree(map);
-            System.out.println(jsonElement.toString());
             virtualMachine = gson.fromJson(jsonElement, VirtualMachine.class);
-            System.out.println("转换完成" + virtualMachine.getClassName());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -56,10 +78,8 @@ public class MapToObjUtil {
     public static GraphNode getGraphNode(Map<String, ? extends Object> map){
         GraphNode graphNode = new GraphNode();
         try{
-            Gson gson = new Gson();
             JsonElement jsonElement = gson.toJsonTree(map);
             graphNode = gson.fromJson(jsonElement, GraphNode.class);
-            System.out.println("转换完成" + graphNode.getClassName());
         }catch (Exception e){
             e.printStackTrace();
         }

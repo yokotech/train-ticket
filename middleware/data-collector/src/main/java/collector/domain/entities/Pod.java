@@ -1,32 +1,21 @@
-package neo4jserver.domain.entities;
+package collector.domain.entities;
 
-import org.neo4j.ogm.annotation.*;
-
-@NodeEntity(label="Pod")
 public class Pod extends GraphNode{
 
-    @Property(name="namespace")
     private String namespace;
 
-    @Property(name="selflink")
     private String selflink;
 
-    @Property(name="restartPolicy")
     private String restartPolicy;
 
-    @Property(name="dnsPolicy")
     private String dnsPolicy;
 
-    @Property(name="terminationGracePeriodSeconds")
     private String terminationGracePeriodSeconds;
 
-    @Property(name="phase")
     private String phase;
 
-    @Property(name="podIP")
     private String podIP;
 
-    @Property(name="qosClass")
     private String qosClass;
 
     public Pod() {

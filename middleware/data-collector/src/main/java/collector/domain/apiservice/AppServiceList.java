@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class AppServiceList {
 
-    private ArrayList<AppService> items;
+    private ArrayList<ApiAppService> items;
 
     public AppServiceList() {
     }
 
-    public ArrayList<AppService> getItems() {
+    public ArrayList<ApiAppService> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<AppService> items) {
+    public void setItems(ArrayList<ApiAppService> items) {
         this.items = items;
     }
 }

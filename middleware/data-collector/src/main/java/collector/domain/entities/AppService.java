@@ -1,28 +1,16 @@
-package neo4jserver.domain.entities;
+package collector.domain.entities;
 
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Property;
-
-import java.util.ArrayList;
-
-@NodeEntity(label="AppService")
 public class AppService extends GraphNode {
 
-    @Property(name="selflink")
     private String selflink;
 
-    @Property(name="namespace")
     private String namespace;
 
-    @Property(name="clusterIP")
     private String clusterIP;
 
-    @Property(name="type")
     private String type;
 
-    @Property(name="port")
     private String port;
-
 
     public AppService() {
         super();

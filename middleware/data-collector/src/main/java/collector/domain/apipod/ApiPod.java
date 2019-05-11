@@ -1,6 +1,6 @@
 package collector.domain.apipod;
 
-public class Pod {
+public class ApiPod {
 
     private PodMetadata metadata;
 
@@ -8,7 +8,7 @@ public class Pod {
 
     private PodStatus status;
 
-    public Pod() {
+    public ApiPod() {
     }
 
     public PodMetadata getMetadata() {

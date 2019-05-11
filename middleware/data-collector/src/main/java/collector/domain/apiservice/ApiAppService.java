@@ -1,12 +1,12 @@
 package collector.domain.apiservice;
 
-public class AppService {
+public class ApiAppService {
 
     private AppServiceMetadata metadata;
 
     private AppServiceSpec spec;
 
-    public AppService() {
+    public ApiAppService() {
     }
 
     public AppServiceMetadata getMetadata() {

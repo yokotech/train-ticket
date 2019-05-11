@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class PodList {
 
-    ArrayList<Pod> items;
+    ArrayList<ApiPod> items;
 
     public PodList() {
     }
 
-    public ArrayList<Pod> getItems() {
+    public ArrayList<ApiPod> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Pod> items) {
+    public void setItems(ArrayList<ApiPod> items) {
         this.items = items;
     }
 }
