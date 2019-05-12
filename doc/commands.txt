@@ -41,7 +41,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 //如何打开k8s
 https://www.cnblogs.com/keithtt/p/8251353.html
-
+https://www.cnblogs.com/520playboy/p/7921633.html
 
 
 docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)

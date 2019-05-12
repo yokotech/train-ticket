@@ -65,6 +65,11 @@ public class MovieService {
 	}
 
 	@Transactional(readOnly = true)
+	public ArrayList<Container> findAllContainers(){
+		return containerRepository.findAllContainers();
+	}
+
+	@Transactional(readOnly = true)
 	public AppService findByAppServiceId(String id){
 		Long idLong = Long.parseLong(id);
 		AppServiceResult sr = appServiceRepository.getServiceWithLabels(idLong);
@@ -77,6 +82,11 @@ public class MovieService {
 	public AppService postAppService(AppService appService){
 		AppService newAppService = appServiceRepository.save(appService);
 		return newAppService;
+	}
+
+	@Transactional(readOnly = true)
+	public ArrayList<AppService> findAllAppServices(){
+		return appServiceRepository.findAllAppService();
 	}
 
     @Transactional(readOnly = true)
@@ -93,6 +103,33 @@ public class MovieService {
 		Pod newPod = podRepository.save(pod);
 		return newPod;
 	}
+
+	@Transactional(readOnly = true)
+	public ArrayList<Pod> findAllPods(){
+		return podRepository.findAllPods();
+	}
+
+	@Transactional(readOnly = true)
+	public VirtualMachine findByVMId(String id){
+		Long idLong = Long.parseLong(id);
+		VirtualMachineResult vmr = virtualMachineRepository.getVitualMachineWithLabels(idLong);
+		VirtualMachine vm = vmr.node;
+		vm.setLabels(new HashSet<>(vmr.labels));
+		return vm;
+	}
+
+	@Transactional(readOnly = true)
+	public VirtualMachine postVirtualMachine(VirtualMachine vm){
+		VirtualMachine newVM = virtualMachineRepository.save(vm);
+		return newVM;
+	}
+
+	@Transactional(readOnly = true)
+	public ArrayList<VirtualMachine> findAllVms(){
+		return virtualMachineRepository.findAllVms();
+	}
+
+
 
 	@Transactional(readOnly = true)
 	public AppServiceAndPod findByAppServiceAndPodId(String id){
@@ -118,6 +155,8 @@ public class MovieService {
 		return appServiceAndPod;
 	}
 
+
+
 	@Transactional(readOnly = true)
 	public PodAndContainer findByPodAndContainerId(String id){
 		Long idLong = Long.parseLong(id);
@@ -141,15 +180,17 @@ public class MovieService {
 		return podAndContainer;
 	}
 
+
+
 	@Transactional(readOnly = true)
-	public VirtualMachineAndPod findByDeployId(String id){
+	public VirtualMachineAndPod findByVirtualMachineAndPodId(String id){
 		Long idLong = Long.parseLong(id);
 		Optional<VirtualMachineAndPod> deploy = virtualMachineAndPodRepository.findById(idLong);
 		return deploy.get();
 	}
 
 	@Transactional(readOnly = true)
-	public VirtualMachineAndPod postDeploy(VirtualMachineAndPod virtualMachineAndPod){
+	public VirtualMachineAndPod postVirtualMachineAndPod(VirtualMachineAndPod virtualMachineAndPod){
 
 		VirtualMachine vm = virtualMachineAndPod.getVirtualMachine();
 		Pod pod = virtualMachineAndPod.getPod();
@@ -165,20 +206,7 @@ public class MovieService {
 		return virtualMachineAndPod;
 	}
 
-	@Transactional(readOnly = true)
-	public VirtualMachine findByVMId(String id){
-		Long idLong = Long.parseLong(id);
-        VirtualMachineResult vmr = virtualMachineRepository.getVitualMachineWithLabels(idLong);
-        VirtualMachine vm = vmr.node;
-        vm.setLabels(new HashSet<>(vmr.labels));
-		return vm;
-	}
 
-	@Transactional(readOnly = true)
-	public VirtualMachine postVirtualMachine(VirtualMachine vm){
-		VirtualMachine newVM = virtualMachineRepository.save(vm);
-		return newVM;
-	}
 
 //	@Transactional(readOnly = true)
 //	public VirtualMachineAndPod saveDeploy(){

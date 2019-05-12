@@ -4,7 +4,7 @@ import neo4jserver.domain.entities.Pod;
 import neo4jserver.domain.entities.VirtualMachine;
 import org.neo4j.ogm.annotation.*;
 
-@RelationshipEntity(type = "DEPLOY_ON")
+@RelationshipEntity(type = "VirtualMachineAndPod")
 public class VirtualMachineAndPod {
 
     @Id

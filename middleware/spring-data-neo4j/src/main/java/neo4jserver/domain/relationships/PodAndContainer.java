@@ -4,7 +4,7 @@ import neo4jserver.domain.entities.Container;
 import neo4jserver.domain.entities.Pod;
 import org.neo4j.ogm.annotation.*;
 
-@RelationshipEntity(type = "ONE_OF")
+@RelationshipEntity(type = "PodAndContainer")
 public class PodAndContainer {
 
     @Id

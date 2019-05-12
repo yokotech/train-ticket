@@ -29,6 +29,9 @@ public class DataCollectorController {
         return dataCollectorService.getAppServiceList();
     }
 
-
+    @GetMapping("/buildFramework")
+    public String buildFrameWork(){
+        return dataCollectorService.createRawFrameworkToKnowledgeGraph();
+    }
 
 }

@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.ArrayList;
 
 @Service
@@ -28,6 +27,8 @@ public class DataCollectorService {
     private Gson gson;
 
     private final String masterIP = "http://10.141.212.24:8080";
+
+    private final String neo4jDaoIP = "http://localhost:19872";
 
 
     public NodeList getNodeList(){
@@ -50,18 +51,45 @@ public class DataCollectorService {
 
     //构建一个基础的知识图谱 - 包括pod node svc
     public String createRawFrameworkToKnowledgeGraph(){
+
+        //第一步: 获取所有的node,pod,service
         ArrayList<ApiNode> apiNodeList = getNodeList().getItems();
         ArrayList<ApiPod> apiPodList = getPodList().getItems();
         ArrayList<ApiAppService> apiServiceList = getAppServiceList().getItems();
-
+        //第二步: 构建关系
         ArrayList<VirtualMachineAndPod> vmPodRelations = constructVmPodRelation(apiNodeList,apiPodList);
         ArrayList<AppServiceAndPod> appServiceAndPodRelations = constructAppServicePodRelation(apiServiceList, apiPodList);
+        //第三步: 上传关系(无需额外上传entity, 关系中包含entity, 对面会自动处理)
+        ArrayList<VirtualMachineAndPod> vmPodRelationsResult = new ArrayList<>();
+        for(VirtualMachineAndPod vmAndPod : vmPodRelations){
+            VirtualMachineAndPod newVmAndPod = postVmAndPod(vmAndPod);
+            vmPodRelationsResult.add(newVmAndPod);
+        }
+        System.out.println("完成上传VirtualMachineAndPod:" + vmPodRelationsResult.size());
+        ArrayList<AppServiceAndPod> appServiceAndPodsResult = new ArrayList<>();
+        for(AppServiceAndPod svcAndPod : appServiceAndPodRelations){
+            AppServiceAndPod newSvcAndPod = postSvcAndPod(svcAndPod);
+            appServiceAndPodsResult.add(newSvcAndPod);
+        }
+        System.out.println("完成上传AppServiceAndPod:" + appServiceAndPodsResult.size());
 
         return "";
     }
 
+    private VirtualMachineAndPod postVmAndPod(VirtualMachineAndPod vmAndPod){
+        VirtualMachineAndPod newObj =
+                restTemplate.postForObject(neo4jDaoIP + "/virtualMachineAndPod",vmAndPod,VirtualMachineAndPod.class);
+        return newObj;
+    }
+
+    private AppServiceAndPod postSvcAndPod(AppServiceAndPod svcAndPod){
+        AppServiceAndPod newObj =
+                restTemplate.postForObject(neo4jDaoIP + "/appServiceAndPod", svcAndPod, AppServiceAndPod.class);
+        return newObj;
+    }
+
     //使用抽取到的apiNode和apiPod
-    public ArrayList<VirtualMachineAndPod> constructVmPodRelation(ArrayList<ApiNode> apiNodes,
+    private ArrayList<VirtualMachineAndPod> constructVmPodRelation(ArrayList<ApiNode> apiNodes,
                                                                   ArrayList<ApiPod> apiPods){
         ArrayList<VirtualMachineAndPod> relations = new ArrayList<>();
         for(ApiNode apiNode : apiNodes){
@@ -85,7 +113,7 @@ public class DataCollectorService {
     }
 
     //使用抽取到的apiPod和apiService
-    public ArrayList<AppServiceAndPod> constructAppServicePodRelation(ArrayList<ApiAppService> apiAppServices,
+    private ArrayList<AppServiceAndPod> constructAppServicePodRelation(ArrayList<ApiAppService> apiAppServices,
                                                                       ArrayList<ApiPod> apiPods){
         ArrayList<AppServiceAndPod> relations = new ArrayList<>();
         for(ApiAppService apiAppService : apiAppServices){
@@ -109,7 +137,7 @@ public class DataCollectorService {
 
 
     //转换ApiNode到Virtual Machine
-    public VirtualMachine convertApiNodeToVm(ApiNode node){
+    private VirtualMachine convertApiNodeToVm(ApiNode node){
 
         VirtualMachine vm = new VirtualMachine();
         vm.setAddress(node.getStatus().getAddresses().get(0).getAddress());
@@ -127,7 +155,7 @@ public class DataCollectorService {
     }
 
     //转换ApiPod到Pod
-    public Pod convertApiPodToPod(ApiPod apiPod){
+    private Pod convertApiPodToPod(ApiPod apiPod){
 
         Pod pod = new Pod();
         pod.setDnsPolicy(apiPod.getSpec().getDnsPolicy());
@@ -144,7 +172,7 @@ public class DataCollectorService {
     }
 
     //转换ApiService到Service
-    public AppService convertApiAppServiceToAppService(ApiAppService apiAppService){
+    private AppService convertApiAppServiceToAppService(ApiAppService apiAppService){
 
         AppService appService = new AppService();
         appService.setClusterIP(apiAppService.getSpec().getClusterIP());

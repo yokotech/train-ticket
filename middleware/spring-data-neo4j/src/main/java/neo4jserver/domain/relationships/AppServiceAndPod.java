@@ -4,7 +4,7 @@ import neo4jserver.domain.entities.AppService;
 import neo4jserver.domain.entities.Pod;
 import org.neo4j.ogm.annotation.*;
 
-@RelationshipEntity(type = "BELONGS_TO")
+@RelationshipEntity(type = "AppServiceAndPod")
 public class AppServiceAndPod {
 
     @Id
