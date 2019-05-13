@@ -1,7 +1,7 @@
 package collector.domain.relationships;
 
+import collector.domain.entities.Container;
 import collector.domain.entities.Pod;
-import neo4jserver.domain.entities.Container;
 
 public class PodAndContainer {
 

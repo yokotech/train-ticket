@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.neo4j.examples</groupId>
-    <artifactId>sdn5-movies</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>spring-data-neo4j</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>SDN5 Movies</name>
+    <name>spring-data-neo4j</name>
 
     <parent>
         <groupId>org.services</groupId>

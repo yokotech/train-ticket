@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class DataCollectorService {
@@ -26,7 +28,7 @@ public class DataCollectorService {
     @Autowired
     private Gson gson;
 
-    private final String masterIP = "http://10.141.212.24:8080";
+    private final String masterIP = "http://10.141.212.25:8080";
 
     private final String neo4jDaoIP = "http://localhost:19872";
 
@@ -117,10 +119,23 @@ public class DataCollectorService {
                                                                       ArrayList<ApiPod> apiPods){
         ArrayList<AppServiceAndPod> relations = new ArrayList<>();
         for(ApiAppService apiAppService : apiAppServices){
-            String svcSelector = apiAppService.getSpec().getSelector().getApp();
+
+            HashMap<String,String> svcSelector = apiAppService.getSpec().getSelector();
+            if(svcSelector == null){
+                continue;
+            }
+
             AppService appService = convertApiAppServiceToAppService(apiAppService);
             for(ApiPod apiPod : apiPods) {
-                if(apiPod.getMetadata().getLabels().getApp().equals(svcSelector)){
+                HashMap<String,String> podLabel = apiPod.getMetadata().getLabels();
+                boolean podIsSvc = false;
+                for(Map.Entry<String,String> entry: podLabel.entrySet()){
+                    if(svcSelector.containsKey(entry.getKey()) && svcSelector.get(entry.getKey()).equals(entry.getValue())){
+                        podIsSvc = true;
+                        break;
+                    }
+                }
+                if(podIsSvc){
                     Pod pod = convertApiPodToPod(apiPod);
                     AppServiceAndPod relation = new AppServiceAndPod();
                     relation.setAppService(appService);

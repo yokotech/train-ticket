@@ -1,5 +1,7 @@
 package collector.domain.apipod;
 
+import java.util.HashMap;
+
 public class PodMetadata {
 
     private String name;
@@ -8,7 +10,7 @@ public class PodMetadata {
 
     private String selfLink;
 
-    private PodLabels labels;
+    private HashMap<String,String> labels;
 
     public PodMetadata() {
     }
@@ -37,11 +39,11 @@ public class PodMetadata {
         this.selfLink = selfLink;
     }
 
-    public PodLabels getLabels() {
+    public HashMap<String, String> getLabels() {
         return labels;
     }
 
-    public void setLabels(PodLabels labels) {
+    public void setLabels(HashMap<String, String> labels) {
         this.labels = labels;
     }
 }

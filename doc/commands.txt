@@ -53,8 +53,8 @@ kubectl label namespace istio-system istio-injection=disabled --overwri
 
 
 
-kubeadm join 10.141.212.24:6443 --token nfadzb.bi5o6ry5msase2rk \
-    --discovery-token-ca-cert-hash sha256:4ddacea89f31ef44f5f0294ec3486dca980c77ec7455eb50b0939c3bd1e2a823
+kubeadm join 10.141.212.25:6443 --token lvqhxk.jsns97b1wg38ain0 \
+    --discovery-token-ca-cert-hash sha256:f7e3ee185b1d65e28b85655e7136ef9eb52801487882ca10faa56251caef7028
 
 
 下不到包的话从docker-hub下，然后重新tag一下

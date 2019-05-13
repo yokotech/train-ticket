@@ -7,7 +7,6 @@ import neo4jserver.domain.relationships.AppServiceAndPod;
 import neo4jserver.domain.relationships.PodAndContainer;
 import neo4jserver.domain.relationships.VirtualMachineAndPod;
 import neo4jserver.repositories.*;
-import neo4jserver.utils.MapToObjUtil;
 import neo4jserver.utils.Neo4jUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MovieService {
 
-	@Autowired
-	private Neo4jUtil neo4jUtil;
+//	@Autowired
+//	private Neo4jUtil neo4jUtil;
 
 	private final ContainerRepository containerRepository;
 

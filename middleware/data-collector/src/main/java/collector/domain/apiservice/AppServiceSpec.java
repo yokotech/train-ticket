@@ -1,10 +1,11 @@
 package collector.domain.apiservice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AppServiceSpec {
 
-    private AppServiceSelector selector;
+    private HashMap<String,String> selector;
 
     private ArrayList<AppServicePort> ports;
 
@@ -15,11 +16,11 @@ public class AppServiceSpec {
     public AppServiceSpec() {
     }
 
-    public AppServiceSelector getSelector() {
+    public HashMap<String, String> getSelector() {
         return selector;
     }
 
-    public void setSelector(AppServiceSelector selector) {
+    public void setSelector(HashMap<String, String> selector) {
         this.selector = selector;
     }
 

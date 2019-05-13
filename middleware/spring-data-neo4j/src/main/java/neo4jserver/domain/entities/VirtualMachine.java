@@ -6,10 +6,10 @@ import org.neo4j.ogm.annotation.*;
 public class VirtualMachine extends GraphNode{
 
     @Property(name="memory")
-    private int memory;
+    private String memory;
 
     @Property(name="cpu")
-    private double cpu;
+    private String cpu;
 
     @Property(name="selflink")
     private String selflink;
@@ -38,19 +38,19 @@ public class VirtualMachine extends GraphNode{
     public VirtualMachine() {
     }
 
-    public int getMemory() {
+    public String getMemory() {
         return memory;
     }
 
-    public void setMemory(int memory) {
+    public void setMemory(String memory) {
         this.memory = memory;
     }
 
-    public double getCpu() {
+    public String getCpu() {
         return cpu;
     }
 
-    public void setCpu(double cpu) {
+    public void setCpu(String cpu) {
         this.cpu = cpu;
     }
 

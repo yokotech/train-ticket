@@ -11,7 +11,6 @@ import org.neo4j.driver.v1.types.Path;
 import org.neo4j.driver.v1.types.Relationship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 /**
