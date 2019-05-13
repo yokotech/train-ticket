@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.services</groupId>
-	<artifactId>ts-service</artifactId>
+	<artifactId>middleware</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>middleware-cluster</name>

@@ -12,8 +12,7 @@ import java.util.Set;
 public class GraphNode {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     @Property(name="name")
     private String name;
@@ -22,7 +21,7 @@ public class GraphNode {
     private String className = this.getClass().getName();
 
     @Labels
-    private Set<String> labels = new HashSet<>();
+    private Set<String> labels = new HashSet<String>();
 
     public GraphNode() {
     }
@@ -31,11 +30,11 @@ public class GraphNode {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -5,7 +5,7 @@ import collector.domain.entities.Pod;
 
 public class PodAndContainer {
 
-    private Long id;
+    private String id;
 
     private Container container;
 
@@ -24,11 +24,11 @@ public class PodAndContainer {
         this.relation = relation;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

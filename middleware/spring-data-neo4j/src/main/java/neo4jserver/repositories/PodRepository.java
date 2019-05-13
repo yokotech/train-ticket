@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PodRepository extends Neo4jRepository<Pod, Long> {
 
-    Optional<Pod> findById(Long id);
+    Optional<Pod> findById(String id);
 
     @Query("MATCH (n:Pod) where id(n)={0} return labels(n) as labels, n as node")
     PodResult getPodWithLabels(Long id);

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PodAndContainerRepository extends Neo4jRepository<PodAndContainer, Long> {
 
-    Optional<PodAndContainer> findById(Long id);
+    Optional<PodAndContainer> findById(String id);
 
     @Query("MATCH p=()-[r:PodAndContainer]->() RETURN p")
     ArrayList<PodAndContainer> findAllPodAndContainer();

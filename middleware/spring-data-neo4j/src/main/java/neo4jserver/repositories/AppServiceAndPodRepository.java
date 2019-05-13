@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface AppServiceAndPodRepository extends Neo4jRepository<AppServiceAndPod, Long> {
 
-    Optional<AppServiceAndPod> findById(Long id);
+    Optional<AppServiceAndPod> findById(String id);
 
     @Query("MATCH p=()-[r:AppServiceAndPod]->() RETURN p")
     ArrayList<AppServiceAndPod> findAllAppServiceAndPod();

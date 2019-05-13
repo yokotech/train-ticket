@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface VirtualMachineAndPodRepository extends Neo4jRepository<VirtualMachineAndPod, Long> {
 
-    Optional<VirtualMachineAndPod> findById(Long id);
+    Optional<VirtualMachineAndPod> findById(String id);
 
     @Query("MATCH p=()-[r:VirtualMachineAndPod]->() RETURN p")
     ArrayList<VirtualMachineAndPod> findAllVirtualMachineAndPod();

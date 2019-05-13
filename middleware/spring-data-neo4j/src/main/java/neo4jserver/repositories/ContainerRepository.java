@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ContainerRepository extends Neo4jRepository<Container, Long> {
 
-    Optional<Container> findById(Long id);
+    Optional<Container> findById(String id);
 
     @Query("MATCH (n:Container) where id(n)={0} return labels(n) as labels, n as node")
     ContainerResult getContainerWithLabels(Long id);

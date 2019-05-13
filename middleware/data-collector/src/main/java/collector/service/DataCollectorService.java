@@ -106,6 +106,7 @@ public class DataCollectorService {
                     relation.setPod(pod);
                     relation.setVirtualMachine(vm);
                     relation.setRelation("Deploy-On");
+                    relation.setId(pod.getId() + "PodVm" + vm.getId());
                     relations.add(relation);
                 }
 
@@ -141,6 +142,7 @@ public class DataCollectorService {
                     relation.setAppService(appService);
                     relation.setPod(pod);
                     relation.setRelation("BELONGS-TO");
+                    relation.setId(pod.getId() + "PodSvc" + appService.getId());
                     relations.add(relation);
                 }
             }
@@ -154,7 +156,8 @@ public class DataCollectorService {
     //转换ApiNode到Virtual Machine
     private VirtualMachine convertApiNodeToVm(ApiNode node){
 
-        VirtualMachine vm = new VirtualMachine();
+        VirtualMachine vm = new VirtualMachine();//id就用名字
+        vm.setId(node.getMetadata().getName());
         vm.setAddress(node.getStatus().getAddresses().get(0).getAddress());
         vm.setArchitecture(node.getStatus().getNodeInfo().getArchitecture());
         vm.setContainerRuntimeVersion(node.getStatus().getNodeInfo().getContainerRuntimeVersion());
@@ -173,6 +176,7 @@ public class DataCollectorService {
     private Pod convertApiPodToPod(ApiPod apiPod){
 
         Pod pod = new Pod();
+        pod.setId(apiPod.getMetadata().getName());//id就用名字
         pod.setDnsPolicy(apiPod.getSpec().getDnsPolicy());
         pod.setNamespace(apiPod.getMetadata().getNamespace());
         pod.setPhase(apiPod.getStatus().getPhase());
@@ -190,6 +194,7 @@ public class DataCollectorService {
     private AppService convertApiAppServiceToAppService(ApiAppService apiAppService){
 
         AppService appService = new AppService();
+        appService.setId(apiAppService.getMetadata().getName());//id就用名字
         appService.setClusterIP(apiAppService.getSpec().getClusterIP());
         appService.setNamespace(apiAppService.getMetadata().getNamespace());
         appService.setName(apiAppService.getMetadata().getName());

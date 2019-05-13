@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface VirtualMachineRepository extends Neo4jRepository<VirtualMachine, Long> {
 
-    Optional<VirtualMachine> findById(Long id);
+    Optional<VirtualMachine> findById(String id);
 
     @Query("MATCH (n:VirtualMachine) where id(n)={0} return labels(n) as labels, n as node")
     VirtualMachineResult getVitualMachineWithLabels(Long id);

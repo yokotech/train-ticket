@@ -132,8 +132,7 @@ public class MovieService {
 
 	@Transactional(readOnly = true)
 	public AppServiceAndPod findByAppServiceAndPodId(String id){
-		Long idLong = Long.parseLong(id);
-		Optional<AppServiceAndPod> appServiceAndPod = appServiceAndPodRepository.findById(idLong);
+		Optional<AppServiceAndPod> appServiceAndPod = appServiceAndPodRepository.findById(id);
 		return appServiceAndPod.get();
 	}
 
@@ -158,8 +157,7 @@ public class MovieService {
 
 	@Transactional(readOnly = true)
 	public PodAndContainer findByPodAndContainerId(String id){
-		Long idLong = Long.parseLong(id);
-		Optional<PodAndContainer> podAndContainer = podAndContainerRepository.findById(idLong);
+		Optional<PodAndContainer> podAndContainer = podAndContainerRepository.findById(id);
 		return podAndContainer.get();
 	}
 
@@ -183,8 +181,7 @@ public class MovieService {
 
 	@Transactional(readOnly = true)
 	public VirtualMachineAndPod findByVirtualMachineAndPodId(String id){
-		Long idLong = Long.parseLong(id);
-		Optional<VirtualMachineAndPod> deploy = virtualMachineAndPodRepository.findById(idLong);
+		Optional<VirtualMachineAndPod> deploy = virtualMachineAndPodRepository.findById(id);
 		return deploy.get();
 	}
 

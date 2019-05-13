@@ -8,8 +8,7 @@ import org.neo4j.ogm.annotation.*;
 public class AppServiceAndPod {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     @StartNode
     private Pod pod;
@@ -32,11 +31,11 @@ public class AppServiceAndPod {
         this.relation = relation;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
