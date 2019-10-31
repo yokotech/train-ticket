@@ -39,12 +39,15 @@
 #         hostPath:
 #           path: /home/parquet
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-basic-info-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-admin-basic-info-service
   template:
     metadata:
       labels:
@@ -72,12 +75,15 @@ spec:
 ---
 
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-order-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-admin-order-service
   template:
     metadata:
       labels:
@@ -104,12 +110,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-route-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-admin-route-service
   template:
     metadata:
       labels:
@@ -136,12 +145,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-travel-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-admin-travel-service
   template:
     metadata:
       labels:
@@ -168,12 +180,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-user-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-admin-user-service
   template:
     metadata:
       labels:
@@ -200,12 +215,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-assurance-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-assurance-service
   template:
     metadata:
       labels:
@@ -232,12 +250,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-basic-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-basic-service
   template:
     metadata:
       labels:
@@ -264,12 +285,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-cancel-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-cancel-service
   template:
     metadata:
       labels:
@@ -296,12 +320,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-config-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-config-service
   template:
     metadata:
       labels:
@@ -328,12 +355,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-price-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-consign-price-service
   template:
     metadata:
       labels:
@@ -360,12 +390,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-consign-service
   template:
     metadata:
       labels:
@@ -392,12 +425,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-contacts-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-contacts-service
   template:
     metadata:
       labels:
@@ -424,12 +460,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-execute-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-execute-service
   template:
     metadata:
       labels:
@@ -456,12 +495,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-map-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-food-map-service
   template:
     metadata:
       labels:
@@ -488,12 +530,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-food-service
   template:
     metadata:
       labels:
@@ -520,12 +565,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-inside-payment-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-inside-payment-service
   template:
     metadata:
       labels:
@@ -552,12 +600,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-auth-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-auth-service
   template:
     metadata:
       labels:
@@ -584,12 +635,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-news-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-news-service
   template:
     metadata:
       labels:
@@ -616,12 +670,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-notification-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-notification-service
   template:
     metadata:
       labels:
@@ -648,12 +705,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-other-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-order-other-service
   template:
     metadata:
       labels:
@@ -680,12 +740,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-order-service
   template:
     metadata:
       labels:
@@ -712,12 +775,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-payment-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-payment-service
   template:
     metadata:
       labels:
@@ -744,12 +810,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-other-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-preserve-other-service
   template:
     metadata:
       labels:
@@ -776,12 +845,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-preserve-service
   template:
     metadata:
       labels:
@@ -808,12 +880,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-price-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-price-service
   template:
     metadata:
       labels:
@@ -840,12 +915,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-rebook-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-rebook-service
   template:
     metadata:
       labels:
@@ -872,12 +950,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-plan-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-route-plan-service
   template:
     metadata:
       labels:
@@ -904,12 +985,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-route-service
   template:
     metadata:
       labels:
@@ -936,12 +1020,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-seat-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-seat-service
   template:
     metadata:
       labels:
@@ -968,12 +1055,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-security-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-security-service
   template:
     metadata:
       labels:
@@ -1000,12 +1090,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-user-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-user-service
   template:
     metadata:
       labels:
@@ -1032,12 +1125,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-station-service
   template:
     metadata:
       labels:
@@ -1064,12 +1160,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticket-office-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-ticket-office-service
   template:
     metadata:
       labels:
@@ -1096,12 +1195,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticketinfo-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-ticketinfo-service
   template:
     metadata:
       labels:
@@ -1128,12 +1230,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-train-service
   template:
     metadata:
       labels:
@@ -1160,12 +1265,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel2-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-travel2-service
   template:
     metadata:
       labels:
@@ -1192,12 +1300,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-plan-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-travel-plan-service
   template:
     metadata:
       labels:
@@ -1224,12 +1335,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-travel-service
   template:
     metadata:
       labels:
@@ -1256,12 +1370,15 @@ spec:
           timeoutSeconds: 5 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-verification-code-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-verification-code-service
   template:
     metadata:
       labels:
@@ -1288,12 +1405,15 @@ spec:
           timeoutSeconds: 5
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-voucher-service
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ts-voucher-service
   template:
     metadata:
       labels:
